@@ -1,0 +1,781 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root {
+    --primary-color: #6e00ff;
+    --secondary-color: #00d4ff;
+    --bg-color: #0a0a0a;
+    --text-color: #ffffff;
+    --card-bg: rgba(30, 30, 30, 0.7);
+    --card-border: rgba(255, 255, 255, 0.1);
+    --accent-color: #ff3366;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+    background-image: 
+        radial-gradient(circle at 20% 30%, rgba(110, 0, 255, 0.2) 0%, transparent 30%),
+        radial-gradient(circle at 80% 70%, rgba(0, 212, 255, 0.2) 0%, transparent 30%);
+    background-attachment: fixed;
+}
+
+/* スクロールプログレスバー */
+.scroll-progress-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: transparent;
+    z-index: 1000;
+}
+
+.scroll-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    box-shadow: 0 0 10px rgba(110, 0, 255, 0.5);
+    transition: width 0.1s ease;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ヘッダースタイル */
+header {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.header-content {
+    text-align: center;
+    z-index: 2;
+    padding: 2rem;
+    background: rgba(10, 10, 10, 0.7);
+    border-radius: 10px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(10px);
+    animation: fadeIn 1s ease-out;
+}
+
+/* スクロールインジケーター */
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: pulseAttention 2s ease-in-out 1s;
+}
+
+@keyframes pulseAttention {
+    0% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.2); }
+    100% { transform: translateX(-50%) scale(1); }
+}
+
+.scroll-indicator p {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
+
+.scroll-arrow {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(110, 0, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: bounce 2s infinite;
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 0 20px rgba(110, 0, 255, 0.5);
+}
+
+.scroll-arrow i {
+    color: var(--text-color);
+    font-size: 1.2rem;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-20px);
+    }
+    60% {
+        transform: translateY(-10px);
+    }
+}
+
+.scroll-indicator:hover {
+    transform: translateX(-50%) scale(1.1);
+}
+
+.scroll-indicator:hover .scroll-arrow {
+    background: var(--primary-color);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    width: 60%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    bottom: -10px;
+    left: 20%;
+    border-radius: 2px;
+}
+
+.highlight {
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-top: 2rem;
+}
+
+/* イントロセクション */
+.intro {
+    padding: 5rem 2rem;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.intro h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.intro p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* インタビューカード */
+.interviews {
+    position: relative;
+    height: 600px;
+    margin: 4rem 0;
+    overflow: hidden;
+}
+
+.interview-card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transform: translateX(100%) scale(0.9);
+    transition: all 0.5s ease-out;
+}
+
+.interview-card.active {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    z-index: 2;
+}
+
+.interview-card.prev {
+    opacity: 0.3;
+    transform: translateX(-100%) scale(0.9);
+}
+
+.interview-content {
+    display: flex;
+    height: 100%;
+    padding: 2rem;
+    background: var(--card-bg);
+    border-radius: 20px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+    position: relative;
+}
+
+.interview-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+}
+
+.interview-image {
+    flex: 0 0 300px;
+    margin-right: 2rem;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.interview-image img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    filter: grayscale(50%);
+    transition: filter 0.3s ease;
+}
+
+.interview-card.active .interview-image img {
+    filter: grayscale(0%);
+}
+
+.interview-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.interview-text h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.role {
+    font-size: 1rem;
+    font-weight: normal;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    margin-left: 1rem;
+}
+
+.quote {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 2rem;
+    position: relative;
+    padding-left: 2rem;
+}
+
+.quote::before {
+    content: '"';
+    position: absolute;
+    left: 0;
+    top: -10px;
+    font-size: 4rem;
+    color: var(--primary-color);
+    opacity: 0.5;
+}
+
+/* ナビゲーション */
+.navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 0 4rem;
+}
+
+.nav-btn {
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--text-color);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 1rem;
+}
+
+.nav-btn:hover {
+    background: var(--primary-color);
+    transform: scale(1.1);
+}
+
+.pagination {
+    font-size: 1.2rem;
+    margin: 0 2rem;
+}
+
+.current-page {
+    color: var(--secondary-color);
+    font-weight: 600;
+}
+
+/* CTA セクション */
+.cta {
+    text-align: center;
+    padding: 5rem 2rem;
+    background: linear-gradient(135deg, rgba(110, 0, 255, 0.1), rgba(0, 212, 255, 0.1));
+    border-radius: 20px;
+    margin-bottom: 5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 80%);
+    animation: pulse 15s linear infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+    100% { transform: scale(0.8); opacity: 0.5; }
+}
+
+.cta h2 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+}
+
+.apply-btn {
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    margin-top: 2rem;
+    box-shadow: 0 10px 20px rgba(110, 0, 255, 0.3);
+}
+
+.apply-btn i {
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+}
+
+.apply-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(110, 0, 255, 0.4);
+}
+
+.apply-btn:hover i {
+    transform: translateX(5px);
+}
+
+/* フッター */
+footer {
+    padding: 3rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 900px) {
+    h1 {
+        font-size: 3rem;
+    }
+
+    .interview-content {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .interview-image {
+        flex: 0 0 auto;
+        margin-right: 0;
+        margin-bottom: 1.5rem;
+        max-height: 250px;
+    }
+
+    .interview-image img {
+        height: 250px;
+    }
+
+    .interviews {
+        height: 800px;
+    }
+
+    .quote {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    .header-content {
+        padding: 1rem;
+    }
+
+    .subtitle {
+        font-size: 1.2rem;
+    }
+
+    .interview-text h3 {
+        font-size: 1.5rem;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .role {
+        margin-left: 0;
+        margin-top: 0.5rem;
+    }
+
+    .cta h2 {
+        font-size: 2rem;
+    }
+
+    .interviews {
+        height: 700px;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-content p:first-child {
+        margin-bottom: 1rem;
+    }
+}
+
+/* ハッカソンギャラリー */
+.hackathon-gallery {
+    padding: 4rem 0;
+    margin-bottom: 4rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1.5s ease, transform 1.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 光のパーティクルアニメーション */
+@keyframes floatLight {
+    0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+    }
+    25% {
+        opacity: 0.8;
+    }
+    50% {
+        transform: translateY(-30px) translateX(20px);
+    }
+    75% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+    }
+}
+
+/* シャイニングエフェクト */
+.gallery-item.shine-effect::after {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    width: 300%;
+    height: 300%;
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+    transform: rotate(30deg);
+    animation: shineEffect 1s forwards;
+    z-index: 2;
+    pointer-events: none;
+}
+
+@keyframes shineEffect {
+    0% {
+        transform: scale(0) rotate(30deg);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1) rotate(30deg);
+        opacity: 0;
+    }
+}
+
+.hackathon-gallery.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+.section-subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 3rem;
+    opacity: 0.8;
+}
+
+.swiper-container {
+    width: 100%;
+    height: 500px;
+    padding: 2rem 0;
+    overflow: visible;
+    perspective: 1000px;
+}
+
+.swiper-slide {
+    width: 80%;
+    max-width: 350px;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.gallery-item {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    transition: transform 0.5s cubic-bezier(0.2, 0.85, 0.4, 1.275), box-shadow 0.5s ease;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.gallery-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(110, 0, 255, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.gallery-item:hover {
+    transform: translateY(-10px) scale(1.02) rotateY(-5deg);
+    box-shadow: 0 30px 60px rgba(110, 0, 255, 0.3);
+}
+
+.gallery-item:hover::before {
+    opacity: 1;
+}
+
+.gallery-image {
+    height: 70%;
+    overflow: hidden;
+    position: relative;
+}
+
+.gallery-image::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background: linear-gradient(to top, var(--card-bg), transparent);
+    z-index: 1;
+}
+
+.gallery-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.2, 0.85, 0.4, 1.275);
+}
+
+.gallery-item:hover .gallery-image img {
+    transform: scale(1.08);
+}
+
+.gallery-caption {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+}
+
+.gallery-caption h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transform: translateZ(20px);
+}
+
+.gallery-caption p {
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+/* スライドのアクティブ状態 */
+.swiper-slide-active .gallery-item {
+    box-shadow: 0 25px 50px rgba(110, 0, 255, 0.4);
+    transform: translateZ(20px);
+}
+
+.swiper-slide-active .gallery-caption h3 {
+    animation: textGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes textGlow {
+    0% {
+        text-shadow: 0 0 5px rgba(110, 0, 255, 0.5);
+    }
+    100% {
+        text-shadow: 0 0 15px rgba(0, 212, 255, 0.8);
+    }
+}
+
+/* Swiper カスタマイズ */
+.swiper-button-next,
+.swiper-button-prev {
+    color: var(--primary-color);
+    background: rgba(0, 0, 0, 0.5);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+    font-size: 18px;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: scale(1.1);
+}
+
+.swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.swiper-pagination-bullet-active {
+    background: var(--primary-color);
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 900px) {
+    .swiper-container {
+        height: 450px;
+    }
+}
+
+@media (max-width: 600px) {
+    .swiper-container {
+        height: 400px;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .gallery-caption h3 {
+        font-size: 1.2rem;
+    }
+} 
