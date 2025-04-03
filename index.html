@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 </head>
 <body>
+    <canvas id="polygonBackground"></canvas>
     <div class="scroll-progress-container">
         <div class="scroll-progress-bar"></div>
     </div>
@@ -43,6 +44,12 @@
                             <h3>山田 太郎 <span class="role">フロントエンドエンジニア</span></h3>
                             <p class="quote">"このハッカソンで、私のキャリアが一変しました。チームでの協働が新たな可能性を開きました。"</p>
                             <p>普段は見えない領域での連携に挑戦できたことが最大の収穫でした。48時間という限られた時間でプロトタイプを完成させるプレッシャーは大きかったですが、それを乗り越えた達成感は何にも代えがたいものです。</p>
+                            <div class="like-container">
+                                <button class="like-button" data-interview-id="interview-1">
+                                    <i class="fas fa-heart"></i>
+                                    <span class="like-count">0</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -50,12 +57,17 @@
                 <div class="interview-card" data-index="1">
                     <div class="interview-content">
                         <div class="interview-image">
-                            <img src="images/engneer.jpeg" alt="佐藤花子">
+                            <img src="images/izawa.jpg" alt="佐藤花子">
                         </div>
                         <div class="interview-text">
-                            <h3>佐藤 花子 <span class="role">バックエンドエンジニア</span></h3>
-                            <p class="quote">"技術的な課題に直面したとき、チームメンバーの多様な視点が解決の鍵となりました。"</p>
-                            <p>API設計の最適化について深く考える機会となり、実務でも活かせる知見を得ました。異なる専門性を持つメンバーと共同作業することで、自分一人では思いつかなかったアプローチに気づくことができました。</p>
+                            <h3>伊澤 遼介<span class="role">バックエンドエンジニア</span></h3>
+                            <p class="quote">"ハッカソンの成果物はプロダクトかもしれない。でも、ほんとうに作っているのは仲間との記憶だ。"</p>
+                            <div class="like-container">
+                                <button class="like-button" data-interview-id="interview-2">
+                                    <i class="fas fa-heart"></i>
+                                    <span class="like-count">0</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -69,6 +81,12 @@
                             <h3>鈴木 一郎 <span class="role">デザイナー</span></h3>
                             <p class="quote">"エンジニアとデザイナーの垣根を越えた協力関係が、最高のUXを生み出しました。"</p>
                             <p>短期間でプロトタイプからフィードバックを得て改善するサイクルは、クリエイティブな挑戦でした。通常のプロジェクトでは経験できない速度感と決断力が身につきました。このハッカソンで築いた人脈は今でも私の財産です。</p>
+                            <div class="like-container">
+                                <button class="like-button" data-interview-id="interview-3">
+                                    <i class="fas fa-heart"></i>
+                                    <span class="like-count">0</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -82,6 +100,12 @@
                             <h3>田中 みどり <span class="role">プロダクトマネージャー</span></h3>
                             <p class="quote">"アイデアからプロトタイプまでの速度が革命的でした。ハッカソンは最高の学びの場です。"</p>
                             <p>通常のプロジェクトでは何週間もかかる意思決定が数時間で行われる環境は、意思決定の本質を考えさせられました。優先順位付けの重要性と、最小限の機能で価値を届けることの大切さを身をもって体験しました。</p>
+                            <div class="like-container">
+                                <button class="like-button" data-interview-id="interview-4">
+                                    <i class="fas fa-heart"></i>
+                                    <span class="like-count">0</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -95,6 +119,12 @@
                             <h3>伊藤 健太 <span class="role">インフラエンジニア</span></h3>
                             <p class="quote">"開発環境の構築からデプロイまで、全てを短時間で完結させる経験は何物にも代えがたいものでした。"</p>
                             <p>クラウドサービスを最大限に活用し、スケーラブルなインフラを短時間で構築する技術が身につきました。障害対応の迅速さも求められ、本番環境に近い緊張感の中でのトラブルシューティング能力が向上しました。</p>
+                            <div class="like-container">
+                                <button class="like-button" data-interview-id="interview-5">
+                                    <i class="fas fa-heart"></i>
+                                    <span class="like-count">0</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -108,6 +138,12 @@
                             <h3>高橋 優子 <span class="role">データサイエンティスト</span></h3>
                             <p class="quote">"データを活用したプロダクト開発の醍醐味を存分に味わいました。この経験は私のキャリアの転機となりました。"</p>
                             <p>リアルタイムのデータ分析と可視化に挑戦し、エンドユーザーに直接価値を届けることができました。アルゴリズムの最適化と実用性のバランスを考慮した設計は、日常業務でも活かせる貴重な経験となっています。</p>
+                            <div class="like-container">
+                                <button class="like-button" data-interview-id="interview-6">
+                                    <i class="fas fa-heart"></i>
+                                    <span class="like-count">0</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -199,6 +235,87 @@
                     
                     <!-- ページネーション -->
                     <div class="swiper-pagination"></div>
+                </div>
+            </section>
+
+            <section class="themes-section">
+                <div class="themes-container">
+                    <h2 class="concept-title"><span class="highlight">3</span>ヶ月で世界を変える<span class="highlight">最小</span>のプロダクトをつくろう</h2>
+                    
+                    <div class="themes-grid">
+                        <h3 class="themes-heading">テーマ例</h3>
+                        <div class="theme-cards">
+                            <div class="theme-card">
+                                <div class="card-inner">
+                                    <div class="card-front">
+                                        <i class="fas fa-building"></i>
+                                        <h4>自社の課題を解決する</h4>
+                                    </div>
+                                    <div class="card-back">
+                                        <p>日々の業務で感じている課題をテクノロジーで解決しましょう</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="theme-card">
+                                <div class="card-inner">
+                                    <div class="card-front">
+                                        <i class="fas fa-tools"></i>
+                                        <h4>社内で役立つツールを作る</h4>
+                                    </div>
+                                    <div class="card-back">
+                                        <p>業務効率化や社内コミュニケーションを促進するツールを開発しましょう</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="theme-card">
+                                <div class="card-inner">
+                                    <div class="card-front">
+                                        <i class="fas fa-globe"></i>
+                                        <h4>社会課題をゆるくハックする</h4>
+                                    </div>
+                                    <div class="card-back">
+                                        <p>身近な社会問題に対して、技術的なアプローチで解決策を提案しましょう</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="theme-card">
+                                <div class="card-inner">
+                                    <div class="card-front">
+                                        <i class="fas fa-rocket"></i>
+                                        <h4>新規事業系</h4>
+                                    </div>
+                                    <div class="card-back">
+                                        <p>未来のビジネスチャンスを見据えた斬新なアイデアを形にしましょう</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="theme-card">
+                                <div class="card-inner">
+                                    <div class="card-front">
+                                        <i class="fas fa-grin-stars"></i>
+                                        <h4>あったら楽しい◯◯</h4>
+                                    </div>
+                                    <div class="card-back">
+                                        <p>遊び心溢れるアイデアも大歓迎。楽しさがイノベーションを生み出します</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="recruitment-info">
+                        <h3 class="themes-heading">募集要項</h3>
+                        <div class="recruitment-content">
+                            <div class="recruitment-text">
+                                <p>普段の勉強のアウトプットをしたい人、1人だと勉強する気が起きない人、とりあえずハッカソンというものに興味がある人。</p>
+                                <div class="edge-line"></div>
+                                <div class="cta-banner">
+                                    <h4>さぁ、一歩踏み出そう</h4>
+                                    <div class="glitch-effect"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
