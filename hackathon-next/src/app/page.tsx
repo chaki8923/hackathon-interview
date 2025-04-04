@@ -332,17 +332,7 @@ export default function Home() {
               }}
               className="mb-12"
             >
-              <SwiperSlide>
-                <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
-                  <div className="gallery-image relative h-60">
-                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8871.jpg" alt="チーム開発の様子" fill className="object-cover" />
-                  </div>
-                  <div className="gallery-caption p-6">
-                    <h3 className="text-xl font-semibold mb-2 text-white">チーム開発</h3>
-                    <p className="text-gray-300">異なる専門性を持つメンバーが集結し、アイデアを形にしていきます</p>
-                  </div>
-                </div>
-              </SwiperSlide>
+      
               <SwiperSlide>
                 <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
                   <div className="gallery-image relative h-60">
@@ -442,17 +432,7 @@ export default function Home() {
                   </div>
                 </div>
               </SwiperSlide>
-              <SwiperSlide>
-                <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
-                  <div className="gallery-image relative h-60">
-                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8870.jpg" alt="プロトタイピング" fill className="object-cover" />
-                  </div>
-                  <div className="gallery-caption p-6">
-                    <h3 className="text-xl font-semibold mb-2 text-white">迅速なプロトタイピング</h3>
-                    <p className="text-gray-300">短時間で機能するプロトタイプを構築する技術が磨かれます</p>
-                  </div>
-                </div>
-              </SwiperSlide>
+
               <SwiperSlide>
                 <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
                   <div className="gallery-image relative h-60">
