@@ -2,14 +2,13 @@
 
 import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
-import { FaChevronDown, FaChevronLeft, FaChevronRight, FaArrowRight, FaBuilding, FaTools, FaGlobe, FaRocket, FaGrinStars } from 'react-icons/fa';
+import { FaChevronDown, FaArrowRight, FaBuilding, FaTools, FaGlobe, FaRocket, FaGrinStars } from 'react-icons/fa';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, EffectCoverflow, Autoplay, EffectCards, EffectCreative } from 'swiper/modules';
+import { Navigation, Pagination, EffectCoverflow, Autoplay, EffectCreative } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-coverflow';
-import 'swiper/css/effect-cards';
 import 'swiper/css/effect-creative';
 import LikeButton from './components/LikeButton';
 import ApplicationModal from './components/ApplicationModal';
@@ -63,20 +62,6 @@ export default function Home() {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
-  // 次のインタビュー表示
-  const handleNext = () => {
-    if (currentIndex < interviews.length - 1) {
-      setCurrentIndex(prev => prev + 1);
-    }
-  };
-
-  // 前のインタビュー表示
-  const handlePrev = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(prev => prev - 1);
-    }
-  };
 
   // ポリゴン背景
   useEffect(() => {
@@ -267,7 +252,7 @@ export default function Home() {
                   onSlideChange={(swiper) => setCurrentIndex(swiper.realIndex)}
                   className="interview-swiper rounded-xl overflow-hidden"
                 >
-                  {interviews.map((interview, index) => (
+                  {interviews.map((interview) => (
                     <SwiperSlide key={interview.interviewId}>
                       <div className="interview-card bg-gray-900/80 backdrop-blur-md border border-gray-800/50 rounded-xl overflow-hidden shadow-xl h-full">
                         <div className="interview-content flex flex-col md:flex-row h-full">
@@ -289,9 +274,9 @@ export default function Home() {
                                 {interview.name} <span className="text-sm font-normal text-blue-400 ml-2">{interview.title}</span>
                               </h3>
                               <p className="quote text-xl text-gray-300 italic mb-6 relative">
-                                <span className="absolute -left-4 top-0 text-3xl text-blue-500/30">"</span>
+                                <span className="absolute -left-4 top-0 text-3xl text-blue-500/30">&ldquo;</span>
                                 {interview.content}
-                                <span className="absolute -bottom-4 right-0 text-3xl text-blue-500/30">"</span>
+                                <span className="absolute -bottom-4 right-0 text-3xl text-blue-500/30">&rdquo;</span>
                               </p>
                             </div>
                             
@@ -350,7 +335,7 @@ export default function Home() {
               <SwiperSlide>
                 <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
                   <div className="gallery-image relative h-60">
-                    <Image src="/images/engi2.jpg" alt="チーム開発の様子" fill className="object-cover" />
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8871.jpg" alt="チーム開発の様子" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
                     <h3 className="text-xl font-semibold mb-2 text-white">チーム開発</h3>
@@ -361,7 +346,7 @@ export default function Home() {
               <SwiperSlide>
                 <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
                   <div className="gallery-image relative h-60">
-                    <Image src="/images/engi2.jpg" alt="プロトタイピング" fill className="object-cover" />
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8798.jpg" alt="プロトタイピング" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
                     <h3 className="text-xl font-semibold mb-2 text-white">迅速なプロトタイピング</h3>
@@ -372,36 +357,114 @@ export default function Home() {
               <SwiperSlide>
                 <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
                   <div className="gallery-image relative h-60">
-                    <Image src="/images/engi2.jpg" alt="ブレインストーミング" fill className="object-cover" />
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8803.jpg" alt="プロトタイピング" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
-                    <h3 className="text-xl font-semibold mb-2 text-white">活発なブレインストーミング</h3>
-                    <p className="text-gray-300">自由な発想から革新的なアイデアが生まれます</p>
+                    <h3 className="text-xl font-semibold mb-2 text-white">迅速なプロトタイピング</h3>
+                    <p className="text-gray-300">短時間で機能するプロトタイプを構築する技術が磨かれます</p>
                   </div>
                 </div>
               </SwiperSlide>
               <SwiperSlide>
                 <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
                   <div className="gallery-image relative h-60">
-                    <Image src="/images/engi2.jpg" alt="プレゼンテーション" fill className="object-cover" />
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8819.jpg" alt="プロトタイピング" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
-                    <h3 className="text-xl font-semibold mb-2 text-white">熱のこもったプレゼンテーション</h3>
-                    <p className="text-gray-300">成果を伝える力も身につきます</p>
+                    <h3 className="text-xl font-semibold mb-2 text-white">迅速なプロトタイピング</h3>
+                    <p className="text-gray-300">短時間で機能するプロトタイプを構築する技術が磨かれます</p>
                   </div>
                 </div>
               </SwiperSlide>
               <SwiperSlide>
                 <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
                   <div className="gallery-image relative h-60">
-                    <Image src="/images/engi2.jpg" alt="チームワーク" fill className="object-cover" />
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8822.jpg" alt="プロトタイピング" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
-                    <h3 className="text-xl font-semibold mb-2 text-white">強力なチームワーク</h3>
-                    <p className="text-gray-300">困難を乗り越え、共に成功を目指します</p>
+                    <h3 className="text-xl font-semibold mb-2 text-white">迅速なプロトタイピング</h3>
+                    <p className="text-gray-300">短時間で機能するプロトタイプを構築する技術が磨かれます</p>
                   </div>
                 </div>
               </SwiperSlide>
+              <SwiperSlide>
+                <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
+                  <div className="gallery-image relative h-60">
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8826.jpg" alt="プロトタイピング" fill className="object-cover" />
+                  </div>
+                  <div className="gallery-caption p-6">
+                    <h3 className="text-xl font-semibold mb-2 text-white">迅速なプロトタイピング</h3>
+                    <p className="text-gray-300">短時間で機能するプロトタイプを構築する技術が磨かれます</p>
+                  </div>
+                </div>
+              </SwiperSlide>
+              <SwiperSlide>
+                <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
+                  <div className="gallery-image relative h-60">
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8836.jpg" alt="プロトタイピング" fill className="object-cover" />
+                  </div>
+                  <div className="gallery-caption p-6">
+                    <h3 className="text-xl font-semibold mb-2 text-white">迅速なプロトタイピング</h3>
+                    <p className="text-gray-300">短時間で機能するプロトタイプを構築する技術が磨かれます</p>
+                  </div>
+                </div>
+              </SwiperSlide>
+              <SwiperSlide>
+                <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
+                  <div className="gallery-image relative h-60">
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8839.jpg" alt="プロトタイピング" fill className="object-cover" />
+                  </div>
+                  <div className="gallery-caption p-6">
+                    <h3 className="text-xl font-semibold mb-2 text-white">迅速なプロトタイピング</h3>
+                    <p className="text-gray-300">短時間で機能するプロトタイプを構築する技術が磨かれます</p>
+                  </div>
+                </div>
+              </SwiperSlide>
+              <SwiperSlide>
+                <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
+                  <div className="gallery-image relative h-60">
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8849.jpg" alt="プロトタイピング" fill className="object-cover" />
+                  </div>
+                  <div className="gallery-caption p-6">
+                    <h3 className="text-xl font-semibold mb-2 text-white">迅速なプロトタイピング</h3>
+                    <p className="text-gray-300">短時間で機能するプロトタイプを構築する技術が磨かれます</p>
+                  </div>
+                </div>
+              </SwiperSlide>
+              <SwiperSlide>
+                <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
+                  <div className="gallery-image relative h-60">
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8850.jpg" alt="プロトタイピング" fill className="object-cover" />
+                  </div>
+                  <div className="gallery-caption p-6">
+                    <h3 className="text-xl font-semibold mb-2 text-white">迅速なプロトタイピング</h3>
+                    <p className="text-gray-300">短時間で機能するプロトタイプを構築する技術が磨かれます</p>
+                  </div>
+                </div>
+              </SwiperSlide>
+              <SwiperSlide>
+                <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
+                  <div className="gallery-image relative h-60">
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8870.jpg" alt="プロトタイピング" fill className="object-cover" />
+                  </div>
+                  <div className="gallery-caption p-6">
+                    <h3 className="text-xl font-semibold mb-2 text-white">迅速なプロトタイピング</h3>
+                    <p className="text-gray-300">短時間で機能するプロトタイプを構築する技術が磨かれます</p>
+                  </div>
+                </div>
+              </SwiperSlide>
+              <SwiperSlide>
+                <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
+                  <div className="gallery-image relative h-60">
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8873.jpg" alt="プロトタイピング" fill className="object-cover" />
+                  </div>
+                  <div className="gallery-caption p-6">
+                    <h3 className="text-xl font-semibold mb-2 text-white">迅速なプロトタイピング</h3>
+                    <p className="text-gray-300">短時間で機能するプロトタイプを構築する技術が磨かれます</p>
+                  </div>
+                </div>
+              </SwiperSlide>
+              
             </Swiper>
           </section>
 
