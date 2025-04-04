@@ -1,0 +1,410 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb: 25, 30, 50;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ポリゴン背景 */
+#polygonBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+/* スクロールプログレスバー */
+.scroll-progress-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: rgba(30, 40, 60, 0.8);
+  z-index: 1000;
+}
+
+.scroll-progress-bar {
+  height: 100%;
+  background: linear-gradient(to right, #3b82f6, #60a5fa);
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+/* 3D カード効果 */
+.perspective {
+  perspective: 1000px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* いいねアニメーション */
+@keyframes float-heart {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -100%) scale(1.5);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -150%) scale(1);
+    opacity: 0;
+  }
+}
+
+.floating-heart {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1000;
+  animation: float-heart 1s ease-out forwards;
+}
+
+/* いいねボタン拍動エフェクト */
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+  15% {
+    transform: scale(1.3);
+  }
+  30% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.2);
+  }
+  60% {
+    transform: scale(1);
+  }
+}
+
+.heartbeat {
+  animation: heartbeat 0.8s ease-in-out;
+}
+
+/* いいね解除シェイクエフェクト */
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  20%, 60% {
+    transform: translateX(-3px);
+  }
+  40%, 80% {
+    transform: translateX(3px);
+  }
+}
+
+.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* 波紋エフェクト */
+@keyframes ripple {
+  0% {
+    box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.3);
+    opacity: 1;
+  }
+  100% {
+    box-shadow: 0 0 0 15px rgba(236, 72, 153, 0);
+    opacity: 0;
+  }
+}
+
+.animate-ripple {
+  animation: ripple 1s ease-out;
+}
+
+/* ホバーエフェクト */
+.group:hover .group-hover\:translate-y-0 {
+  transform: translateY(0);
+}
+
+/* グラデーションテキスト */
+.bg-clip-text {
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* カードのホバーエフェクト */
+.perspective {
+  perspective: 1000px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.group:hover .group-hover\:rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* フローティングハートアニメーション改善 */
+@keyframes floating-heart {
+  0% {
+    transform: translateY(0) scale(0.7);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-50px) scale(1.5);
+    opacity: 0;
+  }
+}
+
+.floating-heart {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: floating-heart 1s ease-out forwards;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* シェイクアニメーション改善 */
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  20%, 60% {
+    transform: translateX(-3px);
+  }
+  40%, 80% {
+    transform: translateX(3px);
+  }
+}
+
+.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* インタビューSwiperのカスタムスタイル */
+.interview-swiper-container {
+  position: relative;
+  margin: 0 auto;
+  padding: 30px 0;
+  overflow: visible;
+}
+
+.interview-swiper {
+  overflow: visible !important;
+}
+
+.interview-swiper .swiper-slide {
+  height: auto;
+  transition: all 0.5s ease;
+  transform-origin: center;
+}
+
+.interview-swiper .swiper-slide-active {
+  z-index: 10;
+}
+
+.interview-swiper .swiper-slide:not(.swiper-slide-active) {
+  opacity: 0.85;
+  filter: blur(0.5px);
+}
+
+.interview-swiper .swiper-button-next,
+.interview-swiper .swiper-button-prev {
+  color: rgba(59, 130, 246, 0.8);
+  background: rgba(15, 23, 42, 0.3);
+  backdrop-filter: blur(8px);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+  transition: all 0.3s ease;
+}
+
+.interview-swiper .swiper-button-next:hover,
+.interview-swiper .swiper-button-prev:hover {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+}
+
+.interview-swiper .swiper-button-next:after,
+.interview-swiper .swiper-button-prev:after {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.interview-swiper .swiper-pagination-bullet {
+  width: 30px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(59, 130, 246, 0.3);
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.interview-swiper .swiper-pagination-bullet-active {
+  background: rgba(59, 130, 246, 0.8);
+  width: 50px;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+/* インタビューカードのスタイル強化 */
+.interview-card {
+  position: relative;
+  transition: all 0.5s ease;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  box-shadow: 
+    0 10px 25px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(59, 130, 246, 0.15);
+  overflow: hidden;
+  background-color: rgba(17, 24, 39, 0.85);
+}
+
+.interview-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(to right, #3b82f6, #8b5cf6, #ec4899);
+  opacity: 0.9;
+  z-index: 1;
+}
+
+.interview-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.1), transparent 70%);
+  pointer-events: none;
+}
+
+.interview-card .quote {
+  position: relative;
+  padding: 0 20px;
+  line-height: 1.6;
+}
+
+.interview-counter {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  border-left: 3px solid rgba(59, 130, 246, 0.7);
+}
+
+/* スクロール下向き矢印の強化 */
+.scroll-arrow {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-arrow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.2), transparent 70%);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0.3;
+  }
+}
+
+/* ギャラリーSwiperの強化 */
+.hackathon-gallery .swiper-slide {
+  transform-origin: center;
+  transition: all 0.5s ease;
+}
+
+.hackathon-gallery .swiper-slide-active {
+  transform: scale(1.05);
+}
+
+.hackathon-gallery .gallery-item {
+  transition: all 0.5s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  overflow: hidden;
+}
+
+.hackathon-gallery .gallery-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  border-color: rgba(59, 130, 246, 0.3);
+}
