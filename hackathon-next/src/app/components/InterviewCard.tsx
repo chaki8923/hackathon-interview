@@ -8,6 +8,7 @@ interface InterviewCardProps {
     name: string;
     title: string;
     content: string;
+    subContent: string;
     imageUrl: string | null;
   };
 }
@@ -32,6 +33,7 @@ export default function InterviewCard({ interview }: InterviewCardProps) {
             <h3 className="text-xl font-bold mb-2">{interview.name}</h3>
             <p className="text-blue-400 mb-4">{interview.title}</p>
             <p className="text-gray-300 italic mb-4">&ldquo;{interview.content}&rdquo;</p>
+            <p className="text-gray-300 italic mb-4">&ldquo;{interview.subContent}&rdquo;</p>
           </div>
           <div className="mt-auto flex justify-end">
             <LikeButton interviewId={interview.interviewId} />

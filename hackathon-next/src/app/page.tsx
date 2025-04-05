@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
+import styles from './index.module.scss';
 import Image from 'next/image';
-import { FaChevronDown, FaArrowRight, FaBuilding, FaTools, FaGlobe, FaRocket, FaGrinStars } from 'react-icons/fa';
+import { FaChevronDown, FaArrowRight, FaBuilding, FaTools, FaGlobe, FaRocket, FaGrinStars, FaLock, FaTimes, FaCheck, FaStar } from 'react-icons/fa';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, EffectCoverflow, Autoplay, EffectCreative } from 'swiper/modules';
 import 'swiper/css';
@@ -20,9 +21,180 @@ interface Interview {
   name: string;
   title: string;
   content: string;
+  fullContent: string; // プレミアムユーザー向けのフルコンテンツ（オプショナル）
+  subContent: string;
   imageUrl: string | null;
   likeCount: number;
+  hasPremiumContent: boolean; // プレミアムコンテンツがあるかのフラグ
+  isPremiumUser: boolean; // ユーザーがプレミアムかどうか
 }
+
+// 課金モーダルのコンポーネント
+const PaymentModal = ({ isOpen, onClose, onPaymentComplete }: { 
+  isOpen: boolean; 
+  onClose: () => void;
+  onPaymentComplete: () => void;
+}) => {
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [processingStep, setProcessingStep] = useState(0);
+  const [showSuccess, setShowSuccess] = useState(false);
+  
+  // 処理ステップのテキスト配列
+  const processingSteps = [
+    "UserAgentを解析中...",
+    "発信元IPを特定しています...",
+    "幾何学データ解析中...",
+    "接続ポイントを検出中...",
+    "生体情報をスキャン中...",
+    "量子暗号鍵を生成中...",
+    "位置情報を特定中...",
+    "DNS解決を最適化中...",
+    "セキュリティプロトコルを確立中...",
+    "支払い処理を実行中..."
+  ];
+  
+  // 処理ステップの進行を制御する関数
+  const simulateProcessing = () => {
+    let currentStep = 0;
+    setIsProcessing(true);
+    setProcessingStep(currentStep);
+    
+    // ステップごとにインターバルをずらして表示
+    const interval = setInterval(() => {
+      currentStep++;
+      setProcessingStep(currentStep);
+      
+      // すべてのステップが完了したら
+      if (currentStep >= processingSteps.length) {
+        clearInterval(interval);
+        setTimeout(() => {
+          setShowSuccess(true);
+          // LocalStorageに課金ユーザー情報を保存
+          localStorage.setItem('premium_user', 'true');
+        }, 800);
+        
+        // 成功表示後、完了処理を実行
+        setTimeout(() => {
+          setIsProcessing(false);
+          setProcessingStep(0);
+          setShowSuccess(false);
+          onPaymentComplete();
+          onClose();
+        }, 3500);
+      }
+    }, 300); // 各ステップの表示間隔
+  };
+  
+  const handlePayment = async () => {
+    // 演出処理を実行
+    simulateProcessing();
+  };
+  
+  if (!isOpen) return null;
+  
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto">
+      <div className="fixed inset-0 bg-black/70 backdrop-blur-sm" onClick={isProcessing ? undefined : onClose}></div>
+      
+      <div className="relative z-10 w-full max-w-md bg-gray-900 border border-gray-700 rounded-xl shadow-2xl p-6 mx-4">
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600"></div>
+        
+        {!isProcessing && !showSuccess && (
+          <button
+            className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+            onClick={onClose}
+          >
+            <FaTimes size={24} />
+          </button>
+        )}
+        
+        {!isProcessing && !showSuccess ? (
+          <>
+            <div className="text-center mb-6">
+              <h2 className="text-2xl font-bold text-white mb-2">プレミアム機能にアクセス</h2>
+              <p className="text-gray-300">月額¥98,000でインタビューのフルコンテンツとその他特典が利用可能になります</p>
+            </div>
+            
+            <div className="bg-gray-800 p-4 rounded-lg mb-6">
+              <h3 className="font-bold text-blue-400 mb-2">プレミアム特典</h3>
+              <ul className="text-gray-300 space-y-2">
+                <li className="flex items-center"><FaCheck className="text-green-500 mr-2" size={14} />ハッカソン優先参加権</li>
+                <li className="flex items-center"><FaCheck className="text-green-500 mr-2" size={14} />当日の発表5分延長権</li>
+                <li className="flex items-center"><FaCheck className="text-green-500 mr-2" size={14} />当日はVIPテーブルで閲覧可能</li>
+                <li className="flex items-center"><FaCheck className="text-green-500 mr-2" size={14} />茶木の収益の出る個人開発メソッド200分超えの動画プレゼント</li>
+              </ul>
+            </div>
+            
+            <div className="space-y-4">
+              <button 
+                className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors flex items-center justify-center"
+                onClick={handlePayment}
+              >
+                月額プランに登録する
+              </button>
+              <button 
+                className="w-full py-3 bg-gray-700 hover:bg-gray-600 text-white font-bold rounded-lg transition-colors"
+                onClick={onClose}
+              >
+                キャンセル
+              </button>
+            </div>
+          </>
+        ) : showSuccess ? (
+          <div className="py-8 text-center">
+            <div className="w-20 h-20 mx-auto bg-green-500/20 rounded-full flex items-center justify-center mb-6">
+              <FaCheck size={40} className="text-green-500" />
+            </div>
+            <h3 className="text-2xl font-bold text-white mb-3">プレミアム登録完了</h3>
+            <p className="text-gray-300 mb-6">すべてのインタビューコンテンツへのアクセスが許可されました</p>
+            <div className="bg-blue-900/30 p-3 rounded-lg border border-blue-800/30 text-sm text-blue-300 mb-5">
+              <p className="flex items-center gap-2">
+                <FaStar className="text-yellow-500" size={16} />
+                <span>今月より料金が発生します</span>
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div className="py-8">
+            <div className="text-center mb-6">
+              <h2 className="text-2xl font-bold text-white mb-2">支払い処理中</h2>
+              <p className="text-blue-400">お待ちください...</p>
+            </div>
+            
+            <div className={`bg-black/50 border border-gray-800 p-4 rounded-lg font-mono text-sm h-64 overflow-y-auto ${styles.customScrollbar}`}>
+              <div className="flex flex-col gap-2 flex-grow">
+                {processingSteps.slice(0, processingStep + 1).map((step, index) => (
+                  <div key={index} className={`${styles.terminalLine} ${index === processingStep ? styles.terminalLineCurrent : styles.terminalLineCompleted}`}>
+                    <span className="text-green-500 mr-2">&gt;</span>
+                    <span className={index === processingStep ? 'text-blue-400' : 'text-gray-400'}>
+                      {step}
+                      {index === processingStep && (
+                        <span className={styles.blinkCursor}></span>
+                      )}
+                      {index < processingStep && (
+                        <span className="text-green-500 ml-2">[完了]</span>
+                      )}
+                    </span>
+                  </div>
+                ))}
+                
+                <div 
+                  className={styles.progressBar}
+                  style={{ opacity: processingStep < processingSteps.length ? 1 : 0 }}
+                >
+                  <div 
+                    className={styles.progressBarInner}
+                    style={{ width: `${(processingStep / processingSteps.length) * 100}%` }}
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
 
 export default function Home() {
   const [interviews, setInterviews] = useState<Interview[]>([]);
@@ -31,23 +203,45 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const polygonsRef = useRef<Array<{x: number, y: number, size: number, angle: number, speed: number}>>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [isPremiumUser, setIsPremiumUser] = useState(false);
+
+  // LocalStorageから課金状態を取得
+  useEffect(() => {
+    console.log("useEffect");
+    // クライアントサイドでのみ実行
+    if (typeof window !== 'undefined') {
+      const isPremium = localStorage.getItem('premium_user') === 'true';
+      console.log("isPremium", isPremium);
+      
+      setIsPremiumUser(isPremium);
+    }
+    
+    // 初期データ取得
+    fetchInterviews();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // インタビューデータを取得
-  useEffect(() => {
-    const fetchInterviews = async () => {
-      try {
-        const response = await fetch('/api/interviews');
-        if (response.ok) {
-          const data = await response.json();
-          setInterviews(data);
-        }
-      } catch (error) {
-        console.error('インタビューデータの取得に失敗しました:', error);
-      } finally {
-        setIsLoading(false);
+  const fetchInterviews = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch('/api/interviews');
+      if (response.ok) {
+        const data = await response.json();
+        console.log("data>>>>>>", data);
+        
+        setInterviews(data);
+       
       }
-    };
-
+    } catch (error) {
+      console.error('インタビューデータの取得に失敗しました:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+  useEffect(() => {
     fetchInterviews();
   }, []);
 
@@ -181,6 +375,24 @@ export default function Home() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+  
+  // 課金モーダルを開く処理
+  const handleOpenPaymentModal = () => {
+    setIsPaymentModalOpen(true);
+  };
+
+  // 課金モーダルを閉じる処理
+  const handleClosePaymentModal = () => {
+    setIsPaymentModalOpen(false);
+  };
+  
+  // 支払い完了後の処理
+  const handlePaymentComplete = async () => {
+    // LocalStorageに情報を保存済みなので、ステートだけ更新
+    setIsPremiumUser(true);
+    // インタビューデータを再取得
+    await fetchInterviews();
+  };
 
   if (isLoading) {
     return <div className="min-h-screen flex items-center justify-center bg-gray-950 text-white">
@@ -254,7 +466,7 @@ export default function Home() {
                 >
                   {interviews.map((interview) => (
                     <SwiperSlide key={interview.interviewId}>
-                      <div className="interview-card bg-gray-900/80 backdrop-blur-md border border-gray-800/50 rounded-xl overflow-hidden shadow-xl h-full">
+                      <div className="interview-card bg-gray-900 border border-gray-800 rounded-xl overflow-hidden shadow-xl h-full">
                         <div className="interview-content flex flex-col md:flex-row h-full">
                           <div className="interview-image md:w-1/3 relative h-64 md:h-auto">
                             {interview.imageUrl && (
@@ -266,18 +478,56 @@ export default function Home() {
                                 sizes="(max-width: 768px) 100vw, 33vw"
                               />
                             )}
-                            <div className="absolute inset-0 bg-gradient-to-r from-gray-900/70 via-transparent to-transparent"></div>
                           </div>
                           <div className="interview-text p-8 md:w-2/3 flex flex-col justify-between">
                             <div>
                               <h3 className="text-2xl font-bold mb-2 text-white">
                                 {interview.name} <span className="text-sm font-normal text-blue-400 ml-2">{interview.title}</span>
                               </h3>
-                              <p className="quote text-xl text-gray-300 italic mb-6 relative">
-                                <span className="absolute -left-4 top-0 text-3xl text-blue-500/30">&ldquo;</span>
-                                {interview.content}
-                                <span className="absolute -bottom-4 right-0 text-3xl text-blue-500/30">&rdquo;</span>
-                              </p>
+                              <div className={styles.interviewContent}>
+                                <p className={styles.interviewText}>
+                                  <span className="absolute -left-4 top-0 text-3xl text-blue-500/30">&ldquo;</span>
+                        
+                                  {isPremiumUser && interview.fullContent 
+                                    ? interview.fullContent 
+                                    : interview.content}
+                                  <span className="absolute -bottom-4 right-0 text-3xl text-blue-500/30">&rdquo;</span>
+                                </p>
+                                
+                                {/* プレミアムコンテンツがあり、プレミアムユーザーでない場合にプレビュー+モザイク+ボタンを表示 */}
+                                {!isPremiumUser && interview.content.length > 120 && (
+                                  <div className={styles.premiumContentTeaser}>
+                                    {/* ダミーのプレミアムコンテンツ（モザイク付き） */}
+                                    <p>
+                                      {interview.fullContent 
+                                        ? interview.fullContent.substring(0, 150) // 文字数を150に削減
+                                        : `${interview.name}さんのインタビューには続きがあります...`}
+                                    </p>
+                                    
+                                    {/* 特典の概要（より簡潔に） */}
+                                    <div className="mt-2 py-1.5 px-3 bg-blue-900/20 rounded-lg border border-blue-800/30 backdrop-blur-sm">
+                                      <h4 className="text-blue-400 flex items-center gap-2 font-medium text-sm mb-1">
+                                        <FaStar size={12} />
+                                        プレミアム会員特典
+                                      </h4>
+                                      <ul className="text-gray-300 text-xs space-y-0 opacity-75 flex flex-wrap gap-x-3">
+                                        <li>全文読み放題</li>
+                                        <li>優先参加権</li>
+                                        <li>限定資料公開</li>
+                                      </ul>
+                                    </div>
+                                    
+                                    {/* 課金ボタン */}
+                                    <button 
+                                      className={styles.paymentButton}
+                                      onClick={() => handleOpenPaymentModal()}
+                                    >
+                                      <FaLock size={14} />
+                                      これ以降はプレミアム会員のみ閲覧できます
+                                    </button>
+                                  </div>
+                                )}
+                              </div>
                             </div>
                             
                             <div className="like-container flex justify-end mt-4">
@@ -339,8 +589,8 @@ export default function Home() {
                     <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8798.jpg" alt="プロトタイピング" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
-                    <h3 className="text-xl font-semibold mb-2 text-white">迅速なプロトタイピング</h3>
-                    <p className="text-gray-300">短時間で機能するプロトタイプを構築する技術が磨かれます</p>
+                    <h3 className="text-xl font-semibold mb-2 text-white">自称モハメド・アリのプレゼン </h3>
+                    <p className="text-gray-300">残り一週間で焦って完成させたとは思えないほど堂々としています</p>
                   </div>
                 </div>
               </SwiperSlide>
@@ -350,8 +600,8 @@ export default function Home() {
                     <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8803.jpg" alt="プロトタイピング" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
-                    <h3 className="text-xl font-semibold mb-2 text-white">迅速なプロトタイピング</h3>
-                    <p className="text-gray-300">短時間で機能するプロトタイプを構築する技術が磨かれます</p>
+                    <h3 className="text-xl font-semibold mb-2 text-white">新しい技術への挑戦</h3>
+                    <p className="text-gray-300">普段は触る機会のない技術への挑戦はとても良い刺激になりました</p>
                   </div>
                 </div>
               </SwiperSlide>
@@ -361,8 +611,8 @@ export default function Home() {
                     <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8819.jpg" alt="プロトタイピング" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
-                    <h3 className="text-xl font-semibold mb-2 text-white">迅速なプロトタイピング</h3>
-                    <p className="text-gray-300">短時間で機能するプロトタイプを構築する技術が磨かれます</p>
+                    <h3 className="text-xl font-semibold mb-2 text-white">考え抜かれた付加価値</h3>
+                    <p className="text-gray-300">「ユーザーにどう感じてもらいたいか？」を軸に開発することで実務にも良い影響が生まれるはずです！</p>
                   </div>
                 </div>
               </SwiperSlide>
@@ -372,8 +622,8 @@ export default function Home() {
                     <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8822.jpg" alt="プロトタイピング" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
-                    <h3 className="text-xl font-semibold mb-2 text-white">迅速なプロトタイピング</h3>
-                    <p className="text-gray-300">短時間で機能するプロトタイプを構築する技術が磨かれます</p>
+                    <h3 className="text-xl font-semibold mb-2 text-white">自分の担当した機能の説明</h3>
+                    <p className="text-gray-300">自分が開発した機能を非エンジニアの方々にもわかりやすく説明するスキルも向上します！</p>
                   </div>
                 </div>
               </SwiperSlide>
@@ -383,8 +633,8 @@ export default function Home() {
                     <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8826.jpg" alt="プロトタイピング" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
-                    <h3 className="text-xl font-semibold mb-2 text-white">迅速なプロトタイピング</h3>
-                    <p className="text-gray-300">短時間で機能するプロトタイプを構築する技術が磨かれます</p>
+                    <h3 className="text-xl font-semibold mb-2 text-white">こだわった点を説明</h3>
+                    <p className="text-gray-300">チームごとの色が出てとても楽しいです！</p>
                   </div>
                 </div>
               </SwiperSlide>
@@ -394,8 +644,8 @@ export default function Home() {
                     <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8836.jpg" alt="プロトタイピング" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
-                    <h3 className="text-xl font-semibold mb-2 text-white">迅速なプロトタイピング</h3>
-                    <p className="text-gray-300">短時間で機能するプロトタイプを構築する技術が磨かれます</p>
+                    <h3 className="text-xl font-semibold mb-2 text-white">熱い想いが大切</h3>
+                    <p className="text-gray-300">内容に自信がなくても彼のように堂々とプレゼンすることが大切です</p>
                   </div>
                 </div>
               </SwiperSlide>
@@ -405,8 +655,8 @@ export default function Home() {
                     <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8839.jpg" alt="プロトタイピング" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
-                    <h3 className="text-xl font-semibold mb-2 text-white">迅速なプロトタイピング</h3>
-                    <p className="text-gray-300">短時間で機能するプロトタイプを構築する技術が磨かれます</p>
+                    <h3 className="text-xl font-semibold mb-2 text-white">論文発表のごとし</h3>
+                    <p className="text-gray-300">つい楽しくなって制限時間を忘れても仲間がなんとかしてくれます</p>
                   </div>
                 </div>
               </SwiperSlide>
@@ -416,8 +666,8 @@ export default function Home() {
                     <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8849.jpg" alt="プロトタイピング" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
-                    <h3 className="text-xl font-semibold mb-2 text-white">迅速なプロトタイピング</h3>
-                    <p className="text-gray-300">短時間で機能するプロトタイプを構築する技術が磨かれます</p>
+                    <h3 className="text-xl font-semibold mb-2 text-white">結果発表</h3>
+                    <p className="text-gray-300">順位ごとにお食事券がもらえます！１位のチームは1回の食事で使いきれないくらい!?</p>
                   </div>
                 </div>
               </SwiperSlide>
@@ -427,8 +677,8 @@ export default function Home() {
                     <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8850.jpg" alt="プロトタイピング" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
-                    <h3 className="text-xl font-semibold mb-2 text-white">迅速なプロトタイピング</h3>
-                    <p className="text-gray-300">短時間で機能するプロトタイプを構築する技術が磨かれます</p>
+                    <h3 className="text-xl font-semibold mb-2 text-white">審査員の方々も盛り上げてくれました</h3>
+                    <p className="text-gray-300">皆さん楽しそうに発表を聞いてくれるので、緊張しないで発表できました！</p>
                   </div>
                 </div>
               </SwiperSlide>
@@ -439,8 +689,8 @@ export default function Home() {
                     <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8873.jpg" alt="プロトタイピング" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
-                    <h3 className="text-xl font-semibold mb-2 text-white">迅速なプロトタイピング</h3>
-                    <p className="text-gray-300">短時間で機能するプロトタイプを構築する技術が磨かれます</p>
+                    <h3 className="text-xl font-semibold mb-2 text-white">学校祭の後のような達成感</h3>
+                    <p className="text-gray-300">真剣に取り組めば取り組むほど、その後の達成感は大きくなります</p>
                   </div>
                 </div>
               </SwiperSlide>
@@ -559,6 +809,13 @@ export default function Home() {
       <ApplicationModal 
         isOpen={isModalOpen} 
         onClose={handleCloseModal} 
+      />
+      
+      {/* 課金モーダル */}
+      <PaymentModal
+        isOpen={isPaymentModalOpen}
+        onClose={handleClosePaymentModal}
+        onPaymentComplete={handlePaymentComplete}
       />
     </>
   );
