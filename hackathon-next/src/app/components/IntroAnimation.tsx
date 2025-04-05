@@ -16,8 +16,7 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
-  const [showSkip, setShowSkip] = useState(false);
-  
+
   // Animation steps with their text and class styles
   const steps: AnimationStep[] = [
     { text: "来たる", className: styles.comesForth },
@@ -25,15 +24,7 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
     { text: "３ヶ月で世界を変える最小のプロダクト", className: styles.changeWorld },
     { text: "新しい打ち手を止めるな", className: styles.dontStop },
   ];
-  
-  // Show skip button after a delay
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowSkip(true);
-    }, 3000);
-    
-    return () => clearTimeout(timer);
-  }, []);
+
   
   // Handle animation sequence
   useEffect(() => {
