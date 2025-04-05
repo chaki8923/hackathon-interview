@@ -208,6 +208,11 @@ export default function Home() {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isPremiumUser, setIsPremiumUser] = useState(false);
   const [showIntroAnimation, setShowIntroAnimation] = useState(false);
+  
+  // 画像ビューワー用の状態
+  const [isImageViewerOpen, setIsImageViewerOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState("");
+  const [selectedImageAlt, setSelectedImageAlt] = useState("");
 
   // LocalStorageから課金状態とアニメーション表示状態を取得
   useEffect(() => {
@@ -415,6 +420,17 @@ export default function Home() {
     }
   };
 
+  // 画像拡大表示処理
+  const openImageViewer = (imageUrl: string, alt: string) => {
+    setSelectedImage(imageUrl);
+    setSelectedImageAlt(alt);
+    setIsImageViewerOpen(true);
+  };
+
+  const closeImageViewer = () => {
+    setIsImageViewerOpen(false);
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-950 text-white">
@@ -503,6 +519,16 @@ export default function Home() {
           100% { opacity: 0; transform: translateY(0); }
         }
         
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        
+        @keyframes zoomIn {
+          from { transform: scale(0.9); opacity: 0; }
+          to { transform: scale(1); opacity: 1; }
+        }
+        
         .hologram-line {
           position: absolute;
           left: 0;
@@ -526,6 +552,14 @@ export default function Home() {
         
         .animate-loading-progress {
           animation: loading-progress 1.5s ease-in-out infinite;
+        }
+        
+        .animate-fadeIn {
+          animation: fadeIn 0.3s ease-out;
+        }
+        
+        .animate-zoomIn {
+          animation: zoomIn 0.4s ease-out;
         }
       `}</style>
       
@@ -746,19 +780,39 @@ export default function Home() {
       
               <SwiperSlide>
                 <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
-                  <div className="gallery-image relative h-60">
-                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8798.jpg" alt="ステファンの目がイってるプレゼン" fill className="object-cover" />
+                  <div className="gallery-image relative h-60 cursor-pointer group" onClick={() => openImageViewer("https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8798.jpg", "自称モハメド・アリのプレゼン")}>
+                    <div className="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/10 transition-all duration-300 z-10 flex items-center justify-center">
+                      <div className="scale-0 group-hover:scale-100 transition-transform duration-300 bg-white/10 backdrop-blur-sm rounded-full p-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                          <circle cx="11" cy="11" r="8"></circle>
+                          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                          <line x1="11" y1="8" x2="11" y2="14"></line>
+                          <line x1="8" y1="11" x2="14" y2="11"></line>
+                        </svg>
+                      </div>
+                    </div>
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8798.jpg" alt="自称モハメド・アリのプレゼン" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
                     <h3 className="text-xl font-semibold mb-2 text-white">自称モハメド・アリのプレゼン </h3>
-                    <p className="text-gray-300">残り一週間で焦って完成させたとは思えないほど堂々としています</p>
+                    <p className="text-gray-300">残り一週間で焦って完成させた(してない)とは思えないほど堂々としています</p>
                   </div>
                 </div>
               </SwiperSlide>
               <SwiperSlide>
                 <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
-                  <div className="gallery-image relative h-60">
-                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8803.jpg" alt="小関さん頑張ってる" fill className="object-cover" />
+                  <div className="gallery-image relative h-60 cursor-pointer group" onClick={() => openImageViewer("https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8803.jpg", "新しい技術への挑戦")}>
+                    <div className="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/10 transition-all duration-300 z-10 flex items-center justify-center">
+                      <div className="scale-0 group-hover:scale-100 transition-transform duration-300 bg-white/10 backdrop-blur-sm rounded-full p-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                          <circle cx="11" cy="11" r="8"></circle>
+                          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                          <line x1="11" y1="8" x2="11" y2="14"></line>
+                          <line x1="8" y1="11" x2="14" y2="11"></line>
+                        </svg>
+                      </div>
+                    </div>
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8803.jpg" alt="新しい技術への挑戦" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
                     <h3 className="text-xl font-semibold mb-2 text-white">新しい技術への挑戦</h3>
@@ -768,30 +822,60 @@ export default function Home() {
               </SwiperSlide>
               <SwiperSlide>
                 <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
-                  <div className="gallery-image relative h-60">
-                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8819.jpg" alt="イケメンが喋ってる様" fill className="object-cover" />
+                  <div className="gallery-image relative h-60 cursor-pointer group" onClick={() => openImageViewer("https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8819.jpg", "考え抜かれた付加価値")}>
+                    <div className="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/10 transition-all duration-300 z-10 flex items-center justify-center">
+                      <div className="scale-0 group-hover:scale-100 transition-transform duration-300 bg-white/10 backdrop-blur-sm rounded-full p-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                          <circle cx="11" cy="11" r="8"></circle>
+                          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                          <line x1="11" y1="8" x2="11" y2="14"></line>
+                          <line x1="8" y1="11" x2="14" y2="11"></line>
+                        </svg>
+                      </div>
+                    </div>
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8819.jpg" alt="考え抜かれた付加価値" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
                     <h3 className="text-xl font-semibold mb-2 text-white">考え抜かれた付加価値</h3>
-                    <p className="text-gray-300">「ユーザーにどう感じてもらいたいか？」を軸に開発することで実務にも良い影響が生まれるはずです！</p>
+                    <p className="text-gray-300">「ユーザーにどう感じてもらいたいか？」を軸に開発することでプロダクト志向のエンジニアに！</p>
                   </div>
                 </div>
               </SwiperSlide>
               <SwiperSlide>
                 <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
-                  <div className="gallery-image relative h-60">
-                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8826.jpg" alt="特に何もやってないけどニヤニヤして発表してる人" fill className="object-cover" />
+                  <div className="gallery-image relative h-60 cursor-pointer group" onClick={() => openImageViewer("https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8826.jpg", "こだわった点を解説")}>
+                    <div className="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/10 transition-all duration-300 z-10 flex items-center justify-center">
+                      <div className="scale-0 group-hover:scale-100 transition-transform duration-300 bg-white/10 backdrop-blur-sm rounded-full p-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                          <circle cx="11" cy="11" r="8"></circle>
+                          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                          <line x1="11" y1="8" x2="11" y2="14"></line>
+                          <line x1="8" y1="11" x2="14" y2="11"></line>
+                        </svg>
+                      </div>
+                    </div>
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8826.jpg" alt="こだわった点を解説" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
-                    <h3 className="text-xl font-semibold mb-2 text-white">こだわった点をてんを解説</h3>
+                    <h3 className="text-xl font-semibold mb-2 text-white">こだわった点を解説</h3>
                     <p className="text-gray-300">チームごとの色が出てとても楽しいです！</p>
                   </div>
                 </div>
               </SwiperSlide>
               <SwiperSlide>
                 <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
-                  <div className="gallery-image relative h-60">
-                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8836.jpg" alt="内容薄いけどなんか堂々としてる人" fill className="object-cover" />
+                  <div className="gallery-image relative h-60 cursor-pointer group" onClick={() => openImageViewer("https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8836.jpg", "熱い想いが大切")}>
+                    <div className="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/10 transition-all duration-300 z-10 flex items-center justify-center">
+                      <div className="scale-0 group-hover:scale-100 transition-transform duration-300 bg-white/10 backdrop-blur-sm rounded-full p-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                          <circle cx="11" cy="11" r="8"></circle>
+                          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                          <line x1="11" y1="8" x2="11" y2="14"></line>
+                          <line x1="8" y1="11" x2="14" y2="11"></line>
+                        </svg>
+                      </div>
+                    </div>
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8836.jpg" alt="熱い想いが大切" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
                     <h3 className="text-xl font-semibold mb-2 text-white">熱い想いが大切</h3>
@@ -801,8 +885,18 @@ export default function Home() {
               </SwiperSlide>
               <SwiperSlide>
                 <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
-                  <div className="gallery-image relative h-60">
-                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8822.jpg" alt="高身長イケメンがなんか言ってる様" fill className="object-cover" />
+                  <div className="gallery-image relative h-60 cursor-pointer group" onClick={() => openImageViewer("https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8822.jpg", "自分の担当した機能の説明")}>
+                    <div className="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/10 transition-all duration-300 z-10 flex items-center justify-center">
+                      <div className="scale-0 group-hover:scale-100 transition-transform duration-300 bg-white/10 backdrop-blur-sm rounded-full p-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                          <circle cx="11" cy="11" r="8"></circle>
+                          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                          <line x1="11" y1="8" x2="11" y2="14"></line>
+                          <line x1="8" y1="11" x2="14" y2="11"></line>
+                        </svg>
+                      </div>
+                    </div>
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8822.jpg" alt="自分の担当した機能の説明" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
                     <h3 className="text-xl font-semibold mb-2 text-white">自分の担当した機能の説明</h3>
@@ -812,8 +906,18 @@ export default function Home() {
               </SwiperSlide>
               <SwiperSlide>
                 <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
-                  <div className="gallery-image relative h-60">
-                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8839.jpg" alt="とっしーさん時間気にせず楽しそうに喋ってて一番笑った" fill className="object-cover" />
+                  <div className="gallery-image relative h-60 cursor-pointer group" onClick={() => openImageViewer("https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8839.jpg", "論文発表のごとし")}>
+                    <div className="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/10 transition-all duration-300 z-10 flex items-center justify-center">
+                      <div className="scale-0 group-hover:scale-100 transition-transform duration-300 bg-white/10 backdrop-blur-sm rounded-full p-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                          <circle cx="11" cy="11" r="8"></circle>
+                          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                          <line x1="11" y1="8" x2="11" y2="14"></line>
+                          <line x1="8" y1="11" x2="14" y2="11"></line>
+                        </svg>
+                      </div>
+                    </div>
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8839.jpg" alt="論文発表のごとし" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
                     <h3 className="text-xl font-semibold mb-2 text-white">論文発表のごとし</h3>
@@ -823,8 +927,18 @@ export default function Home() {
               </SwiperSlide>
               <SwiperSlide>
                 <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
-                  <div className="gallery-image relative h-60">
-                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8849.jpg" alt="見た目が強そうなのがずるい様子" fill className="object-cover" />
+                  <div className="gallery-image relative h-60 cursor-pointer group" onClick={() => openImageViewer("https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8849.jpg", "結果発表")}>
+                    <div className="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/10 transition-all duration-300 z-10 flex items-center justify-center">
+                      <div className="scale-0 group-hover:scale-100 transition-transform duration-300 bg-white/10 backdrop-blur-sm rounded-full p-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                          <circle cx="11" cy="11" r="8"></circle>
+                          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                          <line x1="11" y1="8" x2="11" y2="14"></line>
+                          <line x1="8" y1="11" x2="14" y2="11"></line>
+                        </svg>
+                      </div>
+                    </div>
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8849.jpg" alt="結果発表" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
                     <h3 className="text-xl font-semibold mb-2 text-white">結果発表</h3>
@@ -834,8 +948,18 @@ export default function Home() {
               </SwiperSlide>
               <SwiperSlide>
                 <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
-                  <div className="gallery-image relative h-60">
-                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8850.jpg" alt="真剣に発表を聞いてくれている様子" fill className="object-cover" />
+                  <div className="gallery-image relative h-60 cursor-pointer group" onClick={() => openImageViewer("https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8850.jpg", "審査員の方々も盛り上げてくれました")}>
+                    <div className="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/10 transition-all duration-300 z-10 flex items-center justify-center">
+                      <div className="scale-0 group-hover:scale-100 transition-transform duration-300 bg-white/10 backdrop-blur-sm rounded-full p-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                          <circle cx="11" cy="11" r="8"></circle>
+                          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                          <line x1="11" y1="8" x2="11" y2="14"></line>
+                          <line x1="8" y1="11" x2="14" y2="11"></line>
+                        </svg>
+                      </div>
+                    </div>
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8850.jpg" alt="審査員の方々も盛り上げてくれました" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
                     <h3 className="text-xl font-semibold mb-2 text-white">審査員の方々も盛り上げてくれました</h3>
@@ -846,8 +970,18 @@ export default function Home() {
 
               <SwiperSlide>
                 <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
-                  <div className="gallery-image relative h-60">
-                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8873.jpg" alt="青山さんの中腰がキツそうな様子" fill className="object-cover" />
+                  <div className="gallery-image relative h-60 cursor-pointer group" onClick={() => openImageViewer("https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8873.jpg", "学校祭の後のような達成感")}>
+                    <div className="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/10 transition-all duration-300 z-10 flex items-center justify-center">
+                      <div className="scale-0 group-hover:scale-100 transition-transform duration-300 bg-white/10 backdrop-blur-sm rounded-full p-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                          <circle cx="11" cy="11" r="8"></circle>
+                          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                          <line x1="11" y1="8" x2="11" y2="14"></line>
+                          <line x1="8" y1="11" x2="14" y2="11"></line>
+                        </svg>
+                      </div>
+                    </div>
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8873.jpg" alt="学校祭の後のような達成感" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
                     <h3 className="text-xl font-semibold mb-2 text-white">学校祭の後のような達成感</h3>
@@ -979,6 +1113,33 @@ export default function Home() {
         onClose={handleClosePaymentModal}
         onPaymentComplete={handlePaymentComplete}
       />
+
+      {/* ギャラリー画像ビューワーモーダル */}
+      {isImageViewerOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-black/90 backdrop-blur-md transition-all duration-300 animate-fadeIn">
+          <div 
+            className="absolute inset-0 cursor-pointer"
+            onClick={closeImageViewer}
+          ></div>
+          <div className="relative max-w-5xl w-full max-h-screen p-4 animate-zoomIn">
+            <button 
+              className="absolute top-4 right-4 text-white z-10 bg-black/50 w-10 h-10 rounded-full flex items-center justify-center transition-transform hover:scale-110"
+              onClick={closeImageViewer}
+            >
+              <FaTimes size={20} />
+            </button>
+            <div className="relative overflow-hidden rounded-lg border-2 border-blue-500/30 shadow-[0_0_30px_rgba(59,130,246,0.3)]">
+              <div className="absolute inset-0 z-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10"></div>
+              <img 
+                src={selectedImage} 
+                alt={selectedImageAlt} 
+                className="w-full h-full object-contain relative z-10"
+              />
+            </div>
+            <p className="text-white text-center mt-4 text-sm opacity-70">{selectedImageAlt}</p>
+          </div>
+        </div>
+      )}
     </>
   );
 }
