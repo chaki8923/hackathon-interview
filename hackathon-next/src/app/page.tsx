@@ -13,6 +13,7 @@ import 'swiper/css/effect-coverflow';
 import 'swiper/css/effect-creative';
 import LikeButton from './components/LikeButton';
 import ApplicationModal from './components/ApplicationModal';
+import IntroAnimation from './components/IntroAnimation';
 
 // インタビューデータの型定義
 interface Interview {
@@ -21,6 +22,7 @@ interface Interview {
   name: string;
   title: string;
   content: string;
+  alt: string;
   fullContent: string; // プレミアムユーザー向けのフルコンテンツ（オプショナル）
   subContent: string;
   imageUrl: string | null;
@@ -205,8 +207,9 @@ export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isPremiumUser, setIsPremiumUser] = useState(false);
+  const [showIntroAnimation, setShowIntroAnimation] = useState(false);
 
-  // LocalStorageから課金状態を取得
+  // LocalStorageから課金状態とアニメーション表示状態を取得
   useEffect(() => {
     console.log("useEffect");
     // クライアントサイドでのみ実行
@@ -215,6 +218,14 @@ export default function Home() {
       console.log("isPremium", isPremium);
       
       setIsPremiumUser(isPremium);
+      
+      // アニメーションの表示状態を確認
+      const hasSeenIntro = localStorage.getItem('has_seen_intro') === 'true';
+      
+      // 初回訪問時のみアニメーションを表示
+      if (!hasSeenIntro) {
+        setShowIntroAnimation(true);
+      }
     }
     
     // 初期データ取得
@@ -394,14 +405,77 @@ export default function Home() {
     await fetchInterviews();
   };
 
+  // Handle animation completion
+  const handleIntroComplete = () => {
+    setShowIntroAnimation(false);
+    
+    // localStorage にアニメーション表示済みのフラグを設定
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('has_seen_intro', 'true');
+    }
+  };
+
   if (isLoading) {
-    return <div className="min-h-screen flex items-center justify-center bg-gray-950 text-white">
-      <div className="text-3xl">読み込み中...</div>
-    </div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-950 text-white">
+        <div className="flex flex-col items-center">
+          <div className="relative w-24 h-24 mb-6">
+            {/* Animated hexagon loader */}
+            <div className="absolute top-0 left-0 w-full h-full animate-spin-slow">
+              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <polygon 
+                  points="50 15, 85 36.5, 85 73.5, 50 95, 15 73.5, 15 36.5" 
+                  fill="none" 
+                  stroke="url(#gradient)" 
+                  strokeWidth="3"
+                  className="animate-pulse"
+                />
+                <defs>
+                  <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#3B82F6" />
+                    <stop offset="50%" stopColor="#8B5CF6" />
+                    <stop offset="100%" stopColor="#EC4899" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            {/* Inner pulsing circle */}
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-blue-500 rounded-full animate-pulse opacity-70 blur-sm"></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-purple-500 rounded-full animate-ping opacity-70"></div>
+          </div>
+          <div className="text-sm font-medium tracking-wider text-blue-400 uppercase animate-pulse">Loading</div>
+          <div className="mt-2 relative h-1 w-40 bg-gray-800 rounded-full overflow-hidden">
+            <div className="absolute top-0 left-0 h-full w-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full animate-loading-progress"></div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
     <>
+      {showIntroAnimation && <IntroAnimation onComplete={handleIntroComplete} />}
+      
+      <style jsx global>{`
+        @keyframes spin-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        
+        @keyframes loading-progress {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+        
+        .animate-spin-slow {
+          animation: spin-slow 4s linear infinite;
+        }
+        
+        .animate-loading-progress {
+          animation: loading-progress 1.5s ease-in-out infinite;
+        }
+      `}</style>
+      
       <canvas id="polygonBackground" className="fixed top-0 left-0 w-full h-full -z-10"></canvas>
       <div className="scroll-progress-container fixed top-0 left-0 w-full h-1 z-50 bg-gray-900/50 backdrop-blur-sm">
         <div 
@@ -420,7 +494,7 @@ export default function Home() {
                 <span className="absolute inset-0 blur-sm bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-70"></span>
               </span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-300 mb-8 tracking-wide">前回参加者の声 - あなたの挑戦が始まる</p>
+            <p className="text-xl md:text-2xl text-gray-300 mb-8 tracking-wide">あなたの挑戦が始まる</p>
           </div>
           <div className="scroll-indicator mt-16 cursor-pointer relative z-10 flex flex-col items-center" onClick={scrollToInterviews}>
             <p className="text-gray-400 mb-2">インタビューを見る</p>
@@ -472,7 +546,7 @@ export default function Home() {
                             {interview.imageUrl && (
                               <Image
                                 src={interview.imageUrl}
-                                alt={interview.name}
+                                alt={interview.alt}
                                 className="object-cover transition-transform duration-700 hover:scale-105"
                                 fill
                                 sizes="(max-width: 768px) 100vw, 33vw"
@@ -487,7 +561,6 @@ export default function Home() {
                               <div className={styles.interviewContent}>
                                 <p className={styles.interviewText}>
                                   <span className="absolute -left-4 top-0 text-3xl text-blue-500/30">&ldquo;</span>
-                        
                                   {isPremiumUser && interview.fullContent 
                                     ? interview.fullContent 
                                     : interview.content}
@@ -499,9 +572,7 @@ export default function Home() {
                                   <div className={styles.premiumContentTeaser}>
                                     {/* ダミーのプレミアムコンテンツ（モザイク付き） */}
                                     <p>
-                                      {interview.fullContent 
-                                        ? interview.fullContent.substring(0, 150) // 文字数を150に削減
-                                        : `${interview.name}さんのインタビューには続きがあります...`}
+                                      {`${interview.name}さんのインタビューには続きがあります...`}
                                     </p>
                                     
                                     {/* 特典の概要（より簡潔に） */}
@@ -809,6 +880,7 @@ export default function Home() {
       <ApplicationModal 
         isOpen={isModalOpen} 
         onClose={handleCloseModal} 
+        openPaymentModal={handleOpenPaymentModal}
       />
       
       {/* 課金モーダル */}

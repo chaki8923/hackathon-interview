@@ -22,6 +22,7 @@ model Interview {
   content     String   // 最初の5行程度のみのプレビューコンテンツ
   fullContent String   // 課金ユーザー向けのフルコンテンツ
   subContent  String?
+  alt  String
   imageUrl    String?
   likeCount   Int      @default(0)
   likes       Like[]

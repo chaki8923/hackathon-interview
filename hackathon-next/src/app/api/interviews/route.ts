@@ -17,6 +17,7 @@ export async function GET() {
       name: true,
       title: true,
       content: true,
+      alt: true,
       subContent: true,
       fullContent: true,
       imageUrl: true,
