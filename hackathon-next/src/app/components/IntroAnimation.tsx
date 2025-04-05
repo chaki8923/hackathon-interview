@@ -54,14 +54,7 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
     return () => clearTimeout(timer);
   }, [currentStep, steps.length, isCompleted, onComplete]);
   
-  // Handle skip animation
-  const handleSkip = () => {
-    setIsExiting(true);
-    setTimeout(() => {
-      setIsCompleted(true);
-      onComplete();
-    }, 800);
-  };
+ 
   
   if (isCompleted) return null;
   
