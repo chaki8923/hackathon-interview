@@ -397,7 +397,7 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
                 className={`w-full px-4 py-3 bg-gray-800/60 text-white placeholder-gray-500 border ${
                   errors.name ? 'border-red-500' : 'border-gray-700'
                 } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
-                placeholder="例: 新井 俊也（とっしー）"
+                placeholder="例: 茶木 太郎"
               />
               {errors.name && (
                 <p className="mt-1 text-sm text-red-500">{errors.name}</p>

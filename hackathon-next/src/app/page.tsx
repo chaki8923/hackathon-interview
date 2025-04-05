@@ -467,8 +467,61 @@ export default function Home() {
           100% { transform: translateX(100%); }
         }
         
+        @keyframes pulse-glow {
+          0% { opacity: 0.2; filter: blur(2px); }
+          50% { opacity: 0.4; filter: blur(4px); }
+          100% { opacity: 0.2; filter: blur(2px); }
+        }
+        
+        @keyframes title-glow {
+          0% { text-shadow: 0 0 5px rgba(59, 130, 246, 0.5), 0 0 15px rgba(99, 102, 241, 0.3); }
+          50% { text-shadow: 0 0 20px rgba(59, 130, 246, 0.8), 0 0 30px rgba(99, 102, 241, 0.6); }
+          100% { text-shadow: 0 0 5px rgba(59, 130, 246, 0.5), 0 0 15px rgba(99, 102, 241, 0.3); }
+        }
+        
+        @keyframes hologram-effect {
+          0% { opacity: 0; transform: translateY(1px); }
+          5% { opacity: 0.3; }
+          10% { opacity: 0; transform: translateY(-1px); }
+          15% { opacity: 0.3; }
+          20% { opacity: 0; transform: translateY(1px); }
+          25% { opacity: 0; }
+          30% { opacity: 0.3; }
+          35% { opacity: 0; }
+          40% { opacity: 0; }
+          45% { opacity: 0.3; transform: translateY(-1px); }
+          50% { opacity: 0; }
+          55% { opacity: 0.3; }
+          60% { opacity: 0; }
+          65% { opacity: 0; }
+          70% { opacity: 0.3; transform: translateY(1px); }
+          75% { opacity: 0; }
+          80% { opacity: 0; }
+          85% { opacity: 0.3; }
+          90% { opacity: 0; transform: translateY(-1px); }
+          95% { opacity: 0.3; }
+          100% { opacity: 0; transform: translateY(0); }
+        }
+        
+        .hologram-line {
+          position: absolute;
+          left: 0;
+          right: 0;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
+          animation: hologram-effect 8s infinite;
+        }
+        
         .animate-spin-slow {
           animation: spin-slow 4s linear infinite;
+        }
+        
+        .animate-pulse-glow {
+          animation: pulse-glow 4s ease-in-out infinite;
+        }
+        
+        .animate-title-glow {
+          animation: title-glow 3s ease-in-out infinite;
         }
         
         .animate-loading-progress {
@@ -488,10 +541,47 @@ export default function Home() {
         <header className="min-h-screen flex flex-col items-center justify-center text-center relative">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate-950/50 pointer-events-none"></div>
           <div className="header-content relative z-10">
-            <h1 className="text-5xl md:text-7xl font-bold mb-4 text-white tracking-tighter">
-              HACKATHON <span className="relative inline-block">
-                <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">2025</span>
-                <span className="absolute inset-0 blur-sm bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-70"></span>
+            <h1 className="text-5xl md:text-7xl font-bold mb-4 text-white tracking-tighter relative overflow-hidden">
+              {/* サイバースタイルの装飾線 */}
+              <div className="absolute top-0 left-0 w-20 h-1 bg-blue-500 opacity-60"></div>
+              <div className="absolute top-0 left-0 w-1 h-10 bg-blue-500 opacity-60"></div>
+              <div className="absolute bottom-0 right-0 w-20 h-1 bg-pink-500 opacity-60"></div>
+              <div className="absolute bottom-0 right-0 w-1 h-10 bg-pink-500 opacity-60"></div>
+              
+              {/* ホログラム効果 */}
+              <div className="hologram-line" style={{ top: '10%', animationDelay: '0s' }}></div>
+              <div className="hologram-line" style={{ top: '30%', animationDelay: '0.5s' }}></div>
+              <div className="hologram-line" style={{ top: '50%', animationDelay: '1s' }}></div>
+              <div className="hologram-line" style={{ top: '70%', animationDelay: '1.5s' }}></div>
+              <div className="hologram-line" style={{ top: '90%', animationDelay: '2s' }}></div>
+              
+              {/* 光るロゴ背景 */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="relative">
+                  <div className="absolute inset-0 -translate-x-1/2 -translate-y-1/2 bg-blue-500 rounded-full opacity-20 blur-3xl animate-pulse-glow" style={{ width: '350px', height: '350px' }}></div>
+                  <div className="absolute inset-0 -translate-x-1/2 -translate-y-1/2 bg-purple-500 rounded-full opacity-15 blur-3xl animate-pulse-glow" style={{ width: '300px', height: '300px', animationDelay: '0.5s' }}></div>
+                  <Image 
+                    src="/images/logo.png" 
+                    alt="ハッカソンロゴ" 
+                    width={400} 
+                    height={400} 
+                    className="opacity-40 animate-pulse-glow" 
+                    priority
+                  />
+                </div>
+              </div>
+              
+              {/* 幾何学的な要素 */}
+              <div className="absolute top-1/2 left-0 transform -translate-y-1/2 w-full h-full pointer-events-none overflow-hidden">
+                <div className="absolute left-0 top-1/2 w-full h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-30"></div>
+                <div className="absolute right-0 top-1/2 w-full h-px bg-gradient-to-l from-transparent via-purple-500 to-transparent opacity-30"></div>
+              </div>
+              
+              {/* 近未来的なオーバーレイ */}
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 mix-blend-overlay pointer-events-none"></div>
+              
+              <span className="relative z-10 animate-title-glow px-4">HACKATHON</span> <span className="relative inline-block">
+                <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 animate-title-glow font-extrabold" style={{ textShadow: '0 0 8px rgba(255,255,255,0.5), 0 0 2px rgba(255,255,255,0.8)' }}>2025</span>
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 mb-8 tracking-wide">あなたの挑戦が始まる</p>
@@ -509,7 +599,7 @@ export default function Home() {
           <section className="intro py-20 text-center">
             <h2 className="text-3xl md:text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">3ヶ月で世界を変える</h2>
             <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
-              昨年のハッカソンでは、革新的なアイデアと情熱的なエンジニアが集結し、驚くべき成果を生み出しました。彼らの経験から、次はあなたの番です。
+              昨年のハッカソンでは、革新的なアイデアと情熱的なエンジニアが集結し、<br></br>驚くべき成果を生み出しました。次はあなたの番です。
             </p>
           </section>
 
@@ -572,7 +662,7 @@ export default function Home() {
                                   <div className={styles.premiumContentTeaser}>
                                     {/* ダミーのプレミアムコンテンツ（モザイク付き） */}
                                     <p>
-                                      {`${interview.name}さんのインタビューには続きがあります...`}
+                                      検証ツールでどうにかしても無駄です。プレミアム会員になってください
                                     </p>
                                     
                                     {/* 特典の概要（より簡潔に） */}
@@ -638,7 +728,7 @@ export default function Home() {
                 slideShadows: true
               }}
               autoplay={{
-                delay: 3000,
+                delay: 8000,
                 disableOnInteraction: false
               }}
               navigation
@@ -657,7 +747,7 @@ export default function Home() {
               <SwiperSlide>
                 <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
                   <div className="gallery-image relative h-60">
-                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8798.jpg" alt="プロトタイピング" fill className="object-cover" />
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8798.jpg" alt="ステファンの目がイってるプレゼン" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
                     <h3 className="text-xl font-semibold mb-2 text-white">自称モハメド・アリのプレゼン </h3>
@@ -668,7 +758,7 @@ export default function Home() {
               <SwiperSlide>
                 <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
                   <div className="gallery-image relative h-60">
-                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8803.jpg" alt="プロトタイピング" fill className="object-cover" />
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8803.jpg" alt="小関さん頑張ってる" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
                     <h3 className="text-xl font-semibold mb-2 text-white">新しい技術への挑戦</h3>
@@ -679,7 +769,7 @@ export default function Home() {
               <SwiperSlide>
                 <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
                   <div className="gallery-image relative h-60">
-                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8819.jpg" alt="プロトタイピング" fill className="object-cover" />
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8819.jpg" alt="イケメンが喋ってる様" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
                     <h3 className="text-xl font-semibold mb-2 text-white">考え抜かれた付加価値</h3>
@@ -690,21 +780,10 @@ export default function Home() {
               <SwiperSlide>
                 <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
                   <div className="gallery-image relative h-60">
-                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8822.jpg" alt="プロトタイピング" fill className="object-cover" />
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8826.jpg" alt="特に何もやってないけどニヤニヤして発表してる人" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
-                    <h3 className="text-xl font-semibold mb-2 text-white">自分の担当した機能の説明</h3>
-                    <p className="text-gray-300">自分が開発した機能を非エンジニアの方々にもわかりやすく説明するスキルも向上します！</p>
-                  </div>
-                </div>
-              </SwiperSlide>
-              <SwiperSlide>
-                <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
-                  <div className="gallery-image relative h-60">
-                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8826.jpg" alt="プロトタイピング" fill className="object-cover" />
-                  </div>
-                  <div className="gallery-caption p-6">
-                    <h3 className="text-xl font-semibold mb-2 text-white">こだわった点を説明</h3>
+                    <h3 className="text-xl font-semibold mb-2 text-white">こだわった点をてんを解説</h3>
                     <p className="text-gray-300">チームごとの色が出てとても楽しいです！</p>
                   </div>
                 </div>
@@ -712,7 +791,7 @@ export default function Home() {
               <SwiperSlide>
                 <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
                   <div className="gallery-image relative h-60">
-                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8836.jpg" alt="プロトタイピング" fill className="object-cover" />
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8836.jpg" alt="内容薄いけどなんか堂々としてる人" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
                     <h3 className="text-xl font-semibold mb-2 text-white">熱い想いが大切</h3>
@@ -723,7 +802,18 @@ export default function Home() {
               <SwiperSlide>
                 <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
                   <div className="gallery-image relative h-60">
-                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8839.jpg" alt="プロトタイピング" fill className="object-cover" />
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8822.jpg" alt="高身長イケメンがなんか言ってる様" fill className="object-cover" />
+                  </div>
+                  <div className="gallery-caption p-6">
+                    <h3 className="text-xl font-semibold mb-2 text-white">自分の担当した機能の説明</h3>
+                    <p className="text-gray-300">自分が開発した機能を非エンジニアの方々にもわかりやすく説明するスキルも向上します！</p>
+                  </div>
+                </div>
+              </SwiperSlide>
+              <SwiperSlide>
+                <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
+                  <div className="gallery-image relative h-60">
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8839.jpg" alt="とっしーさん時間気にせず楽しそうに喋ってて一番笑った" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
                     <h3 className="text-xl font-semibold mb-2 text-white">論文発表のごとし</h3>
@@ -734,7 +824,7 @@ export default function Home() {
               <SwiperSlide>
                 <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
                   <div className="gallery-image relative h-60">
-                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8849.jpg" alt="プロトタイピング" fill className="object-cover" />
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8849.jpg" alt="見た目が強そうなのがずるい様子" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
                     <h3 className="text-xl font-semibold mb-2 text-white">結果発表</h3>
@@ -745,7 +835,7 @@ export default function Home() {
               <SwiperSlide>
                 <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
                   <div className="gallery-image relative h-60">
-                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8850.jpg" alt="プロトタイピング" fill className="object-cover" />
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8850.jpg" alt="真剣に発表を聞いてくれている様子" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
                     <h3 className="text-xl font-semibold mb-2 text-white">審査員の方々も盛り上げてくれました</h3>
@@ -757,7 +847,7 @@ export default function Home() {
               <SwiperSlide>
                 <div className="gallery-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden">
                   <div className="gallery-image relative h-60">
-                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8873.jpg" alt="プロトタイピング" fill className="object-cover" />
+                    <Image src="https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8873.jpg" alt="青山さんの中腰がキツそうな様子" fill className="object-cover" />
                   </div>
                   <div className="gallery-caption p-6">
                     <h3 className="text-xl font-semibold mb-2 text-white">学校祭の後のような達成感</h3>
@@ -857,7 +947,7 @@ export default function Home() {
               あなたの<span className="text-blue-500">挑戦</span>を待っています
             </h2>
             <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-              イノベーションの旅に参加しませんか？あなたのアイデアが次の成功ストーリーになるかもしれません。
+              何もできなくてOK！ボタンひとつだけでも仲間と話し合って作ってみませんか？
             </p>
             <button 
               className="apply-btn bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-8 rounded-lg flex items-center justify-center mx-auto transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg"
