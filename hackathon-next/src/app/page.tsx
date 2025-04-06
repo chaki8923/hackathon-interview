@@ -5,6 +5,7 @@ import styles from './index.module.scss';
 import Image from 'next/image';
 import { FaChevronDown, FaArrowRight, FaBuilding, FaTools, FaGlobe, FaRocket, FaGrinStars, FaLock, FaTimes, FaCheck, FaStar } from 'react-icons/fa';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import type { Swiper as SwiperType } from 'swiper';
 import { Navigation, Pagination, EffectCoverflow, Autoplay, EffectCreative } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -517,7 +518,7 @@ export default function Home() {
   }, []);
   
   // Swiperがスライド変更時に次の画像をプリロード
-  const handleSlideChange = (swiper: any) => {
+  const handleSlideChange = (swiper: SwiperType) => {
     // 現在のインデックスを更新
     setCurrentIndex(swiper.realIndex);
     
