@@ -41,6 +41,16 @@ async function main() {
       imageUrl: '/images/sugi.png',
     },
     {
+      interviewId: 'interview-9',
+      name: '櫛田 智博',
+      title: 'エンジニア',
+      content: 'ハッカソンの運営は初挑戦ですが、参加者が最高のプロダクトを生み出せるよう、陰ながら全力サポートします！💪（裏でエナジードリンクを準備する役になるかもしれませんが…）みんなで楽しいイベントにしていきましょう！',
+      fullContent: 'ハッカソンの運営は初挑戦ですが、参加者が最高のプロダクトを生み出せるよう、陰ながら全力サポートします！💪（裏でエナジードリンクを準備する役になるかもしれませんが…）みんなで楽しいイベントにしていきましょう！',
+      subContent: '',
+      alt: '',
+      imageUrl: '/images/engneer.jpeg',
+    },
+    {
       interviewId: 'interview-5',
       name: 'クリシュナ・クマール・ケーシャブ',
       title: 'エンジニア',
@@ -102,16 +112,7 @@ async function main() {
       subContent: '*２年連続最下位',
       imageUrl: '/images/engneer.jpeg',
     },
-    {
-      interviewId: 'interview-9',
-      name: '櫛田 智博',
-      title: 'エンジニア',
-      content: 'ハッカソンの運営は初挑戦ですが、参加者が最高のプロダクトを生み出せるよう、陰ながら全力サポートします！💪（裏でエナジードリンクを準備する役になるかもしれませんが…）みんなで楽しいイベントにしていきましょう！',
-      fullContent: 'ハッカソンの運営は初挑戦ですが、参加者が最高のプロダクトを生み出せるよう、陰ながら全力サポートします！💪（裏でエナジードリンクを準備する役になるかもしれませんが…）みんなで楽しいイベントにしていきましょう！',
-      subContent: '',
-      alt: '',
-      imageUrl: '/images/engneer.jpeg',
-    },
+
   ];
 
   console.log(`インタビューデータの登録を開始します（${interviewsData.length}件）...`);
