@@ -26,15 +26,15 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
     tools: [],
     notes: ''
   });
-  
+
   // Language and tools suggestions
   const languageSuggestions = [
-    'JavaScript', 'TypeScript', 'Python', 'Laravel','RubyonRails','React','Next.js','Lisp','Java', 'C#', 'Go', 'Rust', 'Swift', 'Kotlin', 'PHP', 
+    'JavaScript', 'TypeScript', 'Python', 'Laravel', 'RubyonRails', 'React', 'Next.js', 'Lisp', 'Java', 'C#', 'Go', 'Rust', 'Swift', 'Kotlin', 'PHP',
     'Ruby', 'C++', 'Dart', 'Scala', 'Haskell', 'Clojure', 'Elixir', 'F#'
   ];
 
   const toolSuggestions = [
-    'Figma','Photoshop','Illustrator','Windsurf','VSCode','Cursor','Excel','Docker', 'Kubernetes', 'AWS', 'Firebase', 'GraphQL', 'TensorFlow', 'PyTorch',
+    'Figma', 'Photoshop', 'Illustrator', 'Windsurf', 'VSCode', 'Cursor', 'Excel', 'Docker', 'Kubernetes', 'AWS', 'Firebase', 'GraphQL', 'TensorFlow', 'PyTorch',
     'Git', 'GitHub Actions', 'CircleCI', 'Jenkins', 'MongoDB', 'PostgreSQL', 'MySQL', 'Redis'
   ];
 
@@ -47,21 +47,21 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [sessionId, setSessionId] = useState<string>('');
-  
+
   // UI state for suggestions
   const [showLanguageSuggestions, setShowLanguageSuggestions] = useState(false);
   const [showToolSuggestions, setShowToolSuggestions] = useState(false);
   const [languageQuery, setLanguageQuery] = useState('');
   const [toolQuery, setToolQuery] = useState('');
-  
+
   // Filter suggestions based on query
-  const filteredLanguageSuggestions = languageSuggestions.filter(lang => 
-    lang.toLowerCase().includes(languageQuery.toLowerCase()) && 
+  const filteredLanguageSuggestions = languageSuggestions.filter(lang =>
+    lang.toLowerCase().includes(languageQuery.toLowerCase()) &&
     !formData.languages.includes(lang)
   );
-  
-  const filteredToolSuggestions = toolSuggestions.filter(tool => 
-    tool.toLowerCase().includes(toolQuery.toLowerCase()) && 
+
+  const filteredToolSuggestions = toolSuggestions.filter(tool =>
+    tool.toLowerCase().includes(toolQuery.toLowerCase()) &&
     !formData.tools.includes(tool)
   );
 
@@ -81,7 +81,7 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  
+
   // セッションIDの取得または生成
   useEffect(() => {
     let id = localStorage.getItem('application_session_id');
@@ -90,7 +90,7 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
       localStorage.setItem('application_session_id', id);
     }
     setSessionId(id);
-    
+
     // 既存のアプリケーションデータの取得
     const fetchApplicationData = async () => {
       try {
@@ -99,9 +99,9 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
             'x-session-id': id
           }
         });
-        
+
         const data = await response.json();
-        
+
         if (data.exists && data.data) {
           setFormData({
             department: data.data.department || '',
@@ -116,12 +116,12 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
         console.error('応募データの取得に失敗しました:', error);
       }
     };
-    
+
     if (isOpen) {
       fetchApplicationData();
     }
   }, [isOpen]);
-  
+
   // モーダルが閉じられたときにフォームをリセット
   useEffect(() => {
     if (!isOpen) {
@@ -133,16 +133,16 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
       setShowToolSuggestions(false);
     }
   }, [isOpen]);
-  
+
   // 入力フィールドの変更ハンドラ
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    
+
     setFormData((prev) => ({
       ...prev,
       [name]: value
     }));
-    
+
     // エラーをクリア
     if (errors[name]) {
       setErrors((prev) => {
@@ -223,10 +223,10 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
       }
     }
   };
-  
+
   const [isPremiumUser, setIsPremiumUser] = useState<boolean>(false);
   const [showPremiumWarning, setShowPremiumWarning] = useState<boolean>(false);
-  
+
   // Check premium status on component mount
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -234,19 +234,19 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
       setIsPremiumUser(isPremium);
     }
   }, [isOpen]);
-  
+
   // バリデーション
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
-    
+
     if (!formData.department.trim()) {
       newErrors.department = '所属部署は必須です';
     }
-    
+
     if (!formData.name.trim()) {
       newErrors.name = '氏名は必須です';
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -254,30 +254,30 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
   // フォーム送信前のプレミアムチェック
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
-    
+
     // If user is not premium, show warning modal
     if (!isPremiumUser) {
       setShowPremiumWarning(true);
       return;
     }
-    
+
     // Otherwise proceed with normal submission
     submitForm();
   };
-  
+
   // 実際のフォーム送信処理
   const submitForm = async () => {
     setIsLoading(true);
-    
+
     // Convert arrays to comma-separated strings for API
     const submissionData = {
       ...formData,
       languages: formData.languages.join(', '),
       tools: formData.tools.join(', ')
     };
-    
+
     try {
       const method = isEditing ? 'PUT' : 'POST';
       const response = await fetch('/api/applicants', {
@@ -288,7 +288,7 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
         },
         body: JSON.stringify(submissionData)
       });
-      
+
       if (response.ok) {
         setIsSubmitted(true);
         setTimeout(() => {
@@ -306,7 +306,7 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
       setIsLoading(false);
     }
   };
-  
+
   // Handle subscription flow
   const handleSubscribe = () => {
     setShowPremiumWarning(false);
@@ -314,25 +314,25 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
       openPaymentModal();
     }
   };
-  
+
   // Proceed without premium
   const handleProceedWithoutPremium = () => {
     setShowPremiumWarning(false);
     submitForm();
   };
-  
+
   if (!isOpen) return null;
-  
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto">
       {/* オーバーレイ */}
       <div className="fixed inset-0 bg-black/70 backdrop-blur-sm"></div>
-      
+
       {/* モーダルコンテンツ */}
       <div className="relative z-10 w-full max-w-2xl bg-gray-900/90 backdrop-blur-md border border-gray-700 rounded-xl shadow-2xl p-6 mx-4 overflow-hidden transition-all transform">
         {/* モーダル上部のグラデーションバー */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600"></div>
-        
+
         {/* 閉じるボタン */}
         <button
           className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors duration-200"
@@ -340,16 +340,19 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
         >
           <FaTimes size={24} />
         </button>
-        
+
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 mb-2">
             ハッカソン応募フォーム
           </h2>
-          <p className="text-gray-300">
-            以下のフォームに必要事項を入力し、応募を完了してください
-          </p>
+          {!isSubmitted && (
+            <p className="text-gray-300">
+              以下のフォームに必要事項を入力し、応募を完了してください
+            </p>
+          )}
+
         </div>
-        
+
         {isSubmitted ? (
           <div className="flex flex-col items-center justify-center py-10">
             <div className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center mb-4">
@@ -373,16 +376,15 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
                 name="department"
                 value={formData.department}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 bg-gray-800/60 text-white placeholder-gray-500 border ${
-                  errors.department ? 'border-red-500' : 'border-gray-700'
-                } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
+                className={`w-full px-4 py-3 bg-gray-800/60 text-white placeholder-gray-500 border ${errors.department ? 'border-red-500' : 'border-gray-700'
+                  } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
                 placeholder="例: デザイン・システム部"
               />
               {errors.department && (
                 <p className="mt-1 text-sm text-red-500">{errors.department}</p>
               )}
             </div>
-            
+
             {/* 氏名 */}
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1 flex items-center">
@@ -394,23 +396,22 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 bg-gray-800/60 text-white placeholder-gray-500 border ${
-                  errors.name ? 'border-red-500' : 'border-gray-700'
-                } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
+                className={`w-full px-4 py-3 bg-gray-800/60 text-white placeholder-gray-500 border ${errors.name ? 'border-red-500' : 'border-gray-700'
+                  } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
                 placeholder="例: 茶木 太郎"
               />
               {errors.name && (
                 <p className="mt-1 text-sm text-red-500">{errors.name}</p>
               )}
             </div>
-            
+
             {/* 使用してみたい言語 */}
             <div ref={languageInputRef}>
               <label className="block text-sm font-medium text-gray-300 mb-1 flex items-center">
                 <FaCode className="mr-2 text-blue-400" />
                 使用してみたい技術
               </label>
-              
+
               {/* Selected language tags */}
               <div className="flex flex-wrap gap-2 mb-2">
                 {formData.languages.map((language, index) => (
@@ -426,7 +427,7 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
                   </div>
                 ))}
               </div>
-              
+
               {/* Language input field */}
               <div className="relative">
                 <input
@@ -438,7 +439,7 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
                   className="w-full px-4 py-3 bg-gray-800/60 text-white placeholder-gray-500 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                   placeholder="言語を入力または選択してください"
                 />
-                
+
                 {/* Add button for custom entry */}
                 {languageQuery.trim() !== '' && (
                   <button
@@ -449,7 +450,7 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
                     <FaPlus size={14} />
                   </button>
                 )}
-                
+
                 {/* Suggestion dropdown */}
                 {showLanguageSuggestions && (
                   <div className="absolute z-10 w-full mt-1 bg-gray-800 border border-gray-700 rounded-lg shadow-lg max-h-60 overflow-y-auto">
@@ -466,21 +467,21 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
                       ))
                     ) : (
                       <div className="">
-                        
+
                       </div>
                     )}
                   </div>
                 )}
               </div>
             </div>
-            
+
             {/* 使用したいツール */}
             <div ref={toolsInputRef}>
               <label className="block text-sm font-medium text-gray-300 mb-1 flex items-center">
                 <FaTools className="mr-2 text-blue-400" />
                 使用したいツール
               </label>
-              
+
               {/* Selected tool tags */}
               <div className="flex flex-wrap gap-2 mb-2">
                 {formData.tools.map((tool, index) => (
@@ -496,7 +497,7 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
                   </div>
                 ))}
               </div>
-              
+
               {/* Tool input field */}
               <div className="relative">
                 <input
@@ -508,7 +509,7 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
                   className="w-full px-4 py-3 bg-gray-800/60 text-white placeholder-gray-500 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                   placeholder="ツールを入力または選択してください"
                 />
-                
+
                 {/* Add button for custom entry */}
                 {toolQuery.trim() !== '' && (
                   <button
@@ -519,7 +520,7 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
                     <FaPlus size={14} />
                   </button>
                 )}
-                
+
                 {/* Suggestion dropdown */}
                 {showToolSuggestions && (
                   <div className="absolute z-10 w-full mt-1 bg-gray-800 border border-gray-700 rounded-lg shadow-lg max-h-60 overflow-y-auto">
@@ -543,7 +544,7 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
                 )}
               </div>
             </div>
-            
+
             {/* その他 */}
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1 flex items-center">
@@ -559,21 +560,20 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
                 placeholder="その他伝えたいことがあればご記入ください"
               />
             </div>
-            
+
             {errors.submit && (
               <div className="bg-red-500/20 border border-red-500/50 rounded-lg p-3">
                 <p className="text-sm text-red-400">{errors.submit}</p>
               </div>
             )}
-            
+
             {/* 送信ボタン */}
             <div className="pt-2">
               <button
                 type="submit"
                 disabled={isLoading}
-                className={`w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold rounded-lg transition-all duration-300 transform ${
-                  isLoading ? 'opacity-70 cursor-not-allowed' : 'hover:-translate-y-1 hover:shadow-lg'
-                }`}
+                className={`w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold rounded-lg transition-all duration-300 transform ${isLoading ? 'opacity-70 cursor-not-allowed' : 'hover:-translate-y-1 hover:shadow-lg'
+                  }`}
               >
                 {isLoading ? (
                   <span className="flex items-center justify-center">
@@ -590,15 +590,15 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
           </form>
         )}
       </div>
-      
+
       {/* Premium Warning Modal */}
       {showPremiumWarning && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center overflow-y-auto">
           <div className="fixed inset-0 bg-black/80 backdrop-blur-md"></div>
-          
+
           <div className="relative z-[70] w-full max-w-md bg-gray-900 border border-gray-700 rounded-xl shadow-2xl p-6 mx-4">
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500"></div>
-            
+
             {/* 閉じるボタン */}
             <button
               className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors duration-200"
@@ -606,20 +606,20 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
             >
               <FaTimes size={24} />
             </button>
-            
+
             <div className="text-center mb-8">
               <div className="flex justify-center mb-4">
                 <div className="w-16 h-16 rounded-full bg-yellow-500/20 flex items-center justify-center">
                   <FaStar className="text-yellow-400" size={32} />
                 </div>
               </div>
-              
+
               <h2 className="text-2xl font-bold text-white mb-2">おっとっと！プレミアム課金はお済みですか？</h2>
               <p className="text-gray-300">
                 プレミアム会員になると優先参加権とVIPテーブルでの閲覧が可能になります！
               </p>
             </div>
-            
+
             <div className="bg-yellow-900/20 border border-yellow-800/30 rounded-lg p-4 mb-6">
               <h3 className="font-medium text-yellow-400 mb-2 flex items-center gap-2">
                 <FaLock size={14} />
@@ -640,7 +640,7 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
                 </li>
               </ul>
             </div>
-            
+
             <div className="flex flex-col space-y-3">
               <button
                 onClick={handleSubscribe}
@@ -649,7 +649,7 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
                 <FaStar size={16} />
                 課金する
               </button>
-              
+
               <button
                 onClick={handleProceedWithoutPremium}
                 className="py-3 px-4 bg-gray-700 hover:bg-gray-600 text-gray-200 font-medium rounded-lg transition-colors"

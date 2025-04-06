@@ -199,6 +199,11 @@ const PaymentModal = ({ isOpen, onClose, onPaymentComplete }: {
   );
 };
 
+// 参加者数の型定義
+interface ApplicantCount {
+  count: number;
+}
+
 export default function Home() {
   const [interviews, setInterviews] = useState<Interview[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -209,6 +214,10 @@ export default function Home() {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isPremiumUser, setIsPremiumUser] = useState(false);
   const [showIntroAnimation, setShowIntroAnimation] = useState(false);
+  
+  // 参加者数のstate追加
+  const [applicantCount, setApplicantCount] = useState<number>(0);
+  const [countLoaded, setCountLoaded] = useState<boolean>(false);
   
   // 画像ビューワー用の状態
   const [isImageViewerOpen, setIsImageViewerOpen] = useState(false);
@@ -530,6 +539,24 @@ export default function Home() {
     preloadImage(galleryImageUrls[nextIndex2]);
   };
 
+  // 参加者数を取得
+  const fetchApplicantCount = async () => {
+    try {
+      const response = await fetch('/api/applicants/count');
+      if (response.ok) {
+        const data: ApplicantCount = await response.json();
+        setApplicantCount(data.count);
+        setCountLoaded(true);
+      }
+    } catch (error) {
+      console.error('参加者数の取得に失敗しました:', error);
+    }
+  };
+  
+  useEffect(() => {
+    fetchApplicantCount();
+  }, []);
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-950 text-white">
@@ -740,6 +767,38 @@ export default function Home() {
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 mb-8 tracking-wide">あなたの挑戦が始まる</p>
+            
+            {/* 参加者数表示 */}
+            <div className="participants-counter relative py-4 mb-6">
+              <div className="counter-container flex flex-col items-center justify-center">
+                <div className="counter-label text-gray-400 text-sm mb-2">現在の参加申込者数</div>
+                <div className="counter-value relative flex items-center">
+                  <div className="counter-bg absolute inset-0 bg-blue-500/10 rounded-lg blur-md"></div>
+                  <div className="counter-digits relative flex items-center justify-center min-w-[160px] h-16 rounded-lg border border-blue-500/30 bg-gray-900/50 backdrop-blur-sm px-6">
+                    <div className="absolute inset-0 overflow-hidden rounded-lg">
+                      <div className="absolute inset-0 animate-pulse-glow opacity-10 bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500"></div>
+                      <div className="absolute h-px w-full top-1/2 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-20"></div>
+                    </div>
+                    
+                    {/* ロード中のアニメーション */}
+                    {!countLoaded ? (
+                      <div className="animate-pulse flex space-x-1">
+                        <div className="h-6 w-6 bg-blue-500/20 rounded"></div>
+                        <div className="h-6 w-6 bg-blue-500/20 rounded"></div>
+                        <div className="h-6 w-6 bg-blue-500/20 rounded"></div>
+                      </div>
+                    ) : (
+                      <div className="relative flex items-center justify-center">
+                        <span className="digit-animation text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400 animate-title-glow">
+                          {applicantCount}
+                          <span className="text-xs align-top ml-1">名</span>
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="scroll-indicator mt-16 cursor-pointer relative z-10 flex flex-col items-center" onClick={scrollToInterviews}>
             <p className="text-gray-400 mb-2">インタビューを見る</p>
@@ -1229,6 +1288,16 @@ export default function Home() {
             <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
               何もできなくてOK！ボタンひとつだけでも仲間と話し合って作ってみませんか？
             </p>
+            
+            {/* 募集期間表示 */}
+            <div className="application-period mb-6">
+              <div className="period-badge inline-block py-2 px-4 bg-gradient-to-r from-blue-900/50 to-purple-900/50 backdrop-blur-sm border border-blue-800/30 rounded-lg">
+                <p className="text-sm text-blue-300">
+                  <span className="font-semibold">募集期間</span>: 2025年4月14日(月) 〜 2025年4月25日(金)
+                </p>
+              </div>
+            </div>
+            
             <button 
               className="apply-btn bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-8 rounded-lg flex items-center justify-center mx-auto transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg"
               onClick={handleOpenModal}
