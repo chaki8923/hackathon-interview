@@ -769,8 +769,11 @@ export default function Home() {
             <p className="text-xl md:text-2xl text-gray-300 mb-8 tracking-wide">あなたの挑戦が始まる</p>
             
             {/* 参加者数表示 */}
+            {applicantCount > 5 && (
+
             <div className="participants-counter relative py-4 mb-6">
               <div className="counter-container flex flex-col items-center justify-center">
+                
                 <div className="counter-label text-gray-400 text-sm mb-2">現在の参加申込者数</div>
                 <div className="counter-value relative flex items-center">
                   <div className="counter-bg absolute inset-0 bg-blue-500/10 rounded-lg blur-md"></div>
@@ -799,6 +802,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
+            )}
           </div>
           <div className="scroll-indicator mt-16 cursor-pointer relative z-10 flex flex-col items-center" onClick={scrollToInterviews}>
             <p className="text-gray-400 mb-2">インタビューを見る</p>
