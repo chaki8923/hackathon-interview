@@ -1301,7 +1301,7 @@ export default function Home() {
             </div>
             
             <button 
-              className="apply-btn bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-8 rounded-lg flex items-center justify-center mx-auto transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg"
+              className="apply-btn bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-8 rounded-lg flex items-center justify-center mx-auto transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg cursor-pointer"
               onClick={handleOpenModal}
             >
               今すぐ応募する <FaArrowRight className="ml-2" />
