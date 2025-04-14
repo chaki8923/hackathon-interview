@@ -1,0 +1,2 @@
+import { useState, useEffect, useRef } from 'react';
+import { FaArrowRight, FaChevronDown, FaTimes, FaBuilding, FaTools, FaGlobe, FaRocket, FaGrinStars, FaStar, FaLock, FaCheck } from 'react-icons/fa'; 
