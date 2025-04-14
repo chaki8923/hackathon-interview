@@ -16,6 +16,16 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "2025 Hackathon",
   description: "今年のハッカソンを彩るのは参加したメンバー全員です。",
+  openGraph: {
+    images: [
+      {
+        url: "/images/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "2025 Hackathon",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
