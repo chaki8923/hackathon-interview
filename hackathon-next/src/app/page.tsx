@@ -792,7 +792,7 @@ export default function Home() {
                     ) : (
                       <div className="relative flex items-center justify-center">
                         <span className="digit-animation text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400 animate-title-glow">
-                          {13}
+                          {applicantCount}
                           <span className="text-xs align-top ml-1">名</span>
                         </span>
                       </div>

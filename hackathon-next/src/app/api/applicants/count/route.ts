@@ -5,16 +5,8 @@ const prisma = new PrismaClient();
 
 export async function GET() {
   try {
-    // notesカラムに'テスト'が含まれていないデータの数を取得
-    const count = await prisma.applicant.count({
-      where: {
-        NOT: {
-          notes: {
-            contains: 'テスト',
-          },
-        },
-      },
-    });
+    // すべてのデータを取得するように変更
+    const count = await prisma.applicant.count();
 
     return NextResponse.json({ count }, { status: 200 });
   } catch (error) {
