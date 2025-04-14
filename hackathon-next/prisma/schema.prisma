@@ -1,54 +1,47 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-
-
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model Interview {
   id          Int      @id @default(autoincrement())
-  interviewId String   @unique // "interview-1", "interview-2"など
+  interviewId String   @unique
   name        String
   title       String
-  content     String   // 最初の5行程度のみのプレビューコンテンツ
-  fullContent String   // 課金ユーザー向けのフルコンテンツ
-  subContent  String?
-  alt  String
+  content     String
   imageUrl    String?
   likeCount   Int      @default(0)
-  likes       Like[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  subContent  String?
+  fullContent String
+  alt         String
+  likes       Like[]
 }
 
 model Like {
   id          Int       @id @default(autoincrement())
-  interview   Interview @relation(fields: [interviewId], references: [id])
   interviewId Int
-  sessionId   String    // ブラウザセッションを識別するためのID
+  sessionId   String
   createdAt   DateTime  @default(now())
+  interview   Interview @relation(fields: [interviewId], references: [id])
 
   @@unique([interviewId, sessionId])
 }
 
 model Applicant {
-  id             Int      @id @default(autoincrement())
-  sessionId      String   @unique // ブラウザのセッションIDで識別
-  department     String   // 所属部署（必須）
-  name           String   // 氏名（必須）
-  languages      String?  // 使用してみたい言語（任意）
-  tools          String?  // 使用したいツール（任意）
-  notes          String?  // その他（任意）
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id         Int      @id @default(autoincrement())
+  sessionId  String   @unique
+  department String
+  name       String
+  languages  String?
+  tools      String?
+  notes      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }

@@ -1,20 +1,22 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { FaArrowRight, FaChevronDown, FaTimes, FaBuilding, FaTools, FaGlobe, FaRocket, FaGrinStars, FaStar, FaLock, FaCheck } from 'react-icons/fa';
 import styles from './index.module.scss';
 import Image from 'next/image';
-import { FaChevronDown, FaArrowRight, FaBuilding, FaTools, FaGlobe, FaRocket, FaGrinStars, FaLock, FaTimes, FaCheck, FaStar } from 'react-icons/fa';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, EffectCoverflow, EffectCreative, Autoplay } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
-import { Navigation, Pagination, EffectCoverflow, Autoplay, EffectCreative } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/effect-creative';
+import 'swiper/css/autoplay';
 import LikeButton from './components/LikeButton';
 import ApplicationModal from './components/ApplicationModal';
 import IntroAnimation from './components/IntroAnimation';
+import OnlineViewerModal from './components/OnlineViewerModal';
 
 // インタビューデータの型定義
 interface Interview {
@@ -211,12 +213,14 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const polygonsRef = useRef<Array<{x: number, y: number, size: number, angle: number, speed: number}>>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isOnlineViewerModalOpen, setIsOnlineViewerModalOpen] = useState(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isPremiumUser, setIsPremiumUser] = useState(false);
   const [showIntroAnimation, setShowIntroAnimation] = useState(false);
   
   // 参加者数のstate追加
   const [applicantCount, setApplicantCount] = useState<number>(0);
+  const [onlineViewerCount, setOnlineViewerCount] = useState<number>(0);
   const [countLoaded, setCountLoaded] = useState<boolean>(false);
   
   // 画像ビューワー用の状態
@@ -428,6 +432,16 @@ export default function Home() {
     setIsPaymentModalOpen(false);
   };
   
+  // オンライン視聴モーダルを開く処理
+  const handleOpenOnlineViewerModal = () => {
+    setIsOnlineViewerModalOpen(true);
+  };
+
+  // オンライン視聴モーダルを閉じる処理
+  const handleCloseOnlineViewerModal = () => {
+    setIsOnlineViewerModalOpen(false);
+  };
+  
   // 支払い完了後の処理
   const handlePaymentComplete = async () => {
     // LocalStorageに情報を保存済みなので、ステートだけ更新
@@ -552,9 +566,24 @@ export default function Home() {
       console.error('参加者数の取得に失敗しました:', error);
     }
   };
+
+  // オンライン視聴者数を取得
+  const fetchOnlineViewerCount = async () => {
+    try {
+      const response = await fetch('/api/online-viewers/count');
+      if (response.ok) {
+        const data: ApplicantCount = await response.json();
+        setOnlineViewerCount(data.count);
+        setCountLoaded(true);
+      }
+    } catch (error) {
+      console.error('オンライン視聴者数の取得に失敗しました:', error);
+    }
+  };
   
   useEffect(() => {
     fetchApplicantCount();
+    fetchOnlineViewerCount();
   }, []);
 
   if (isLoading) {
@@ -1300,12 +1329,58 @@ export default function Home() {
               </div>
             </div>
             
-            <button 
-              className="apply-btn bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-8 rounded-lg flex items-center justify-center mx-auto transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg cursor-pointer"
-              onClick={handleOpenModal}
-            >
-              今すぐ応募する <FaArrowRight className="ml-2" />
-            </button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <button 
+                className="apply-btn bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-8 rounded-lg flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg cursor-pointer"
+                onClick={handleOpenModal}
+              >
+                今すぐ応募する <FaArrowRight className="ml-2" />
+              </button>
+              
+              <button 
+                className="online-viewer-btn bg-gradient-to-r from-purple-600/80 to-pink-600/80 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-3 px-8 rounded-lg flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg cursor-pointer border border-purple-500/30"
+                onClick={handleOpenOnlineViewerModal}
+              >
+                オンライン視聴で参加 <FaArrowRight className="ml-2" />
+              </button>
+            </div>
+
+            {/* 参加者カウンター表示 */}
+            <div className="counters-container flex flex-col md:flex-row justify-center gap-6 mt-8">
+              <div className="counter-box">
+                <div className="counter-label text-gray-400 text-sm mb-2">現在の参加申込者数</div>
+                <div className="counter-value relative flex items-center">
+                  <div className="counter-bg absolute inset-0 bg-blue-500/10 rounded-lg blur-md"></div>
+                  <div className="counter-digits relative flex items-center justify-center min-w-[120px] h-12 rounded-lg border border-blue-500/30 bg-gray-900/50 backdrop-blur-sm px-6">
+                    {!countLoaded ? (
+                      <div className="animate-pulse flex space-x-1">
+                        <div className="h-4 w-4 bg-blue-500/20 rounded"></div>
+                        <div className="h-4 w-4 bg-blue-500/20 rounded"></div>
+                      </div>
+                    ) : (
+                      <span className="text-2xl font-bold text-blue-400">{applicantCount}<span className="text-xs align-top ml-1">名</span></span>
+                    )}
+                  </div>
+                </div>
+              </div>
+              
+              <div className="counter-box">
+                <div className="counter-label text-gray-400 text-sm mb-2">オンライン視聴登録者数</div>
+                <div className="counter-value relative flex items-center">
+                  <div className="counter-bg absolute inset-0 bg-purple-500/10 rounded-lg blur-md"></div>
+                  <div className="counter-digits relative flex items-center justify-center min-w-[120px] h-12 rounded-lg border border-purple-500/30 bg-gray-900/50 backdrop-blur-sm px-6">
+                    {!countLoaded ? (
+                      <div className="animate-pulse flex space-x-1">
+                        <div className="h-4 w-4 bg-purple-500/20 rounded"></div>
+                        <div className="h-4 w-4 bg-purple-500/20 rounded"></div>
+                      </div>
+                    ) : (
+                      <span className="text-2xl font-bold text-purple-400">{onlineViewerCount}<span className="text-xs align-top ml-1">名</span></span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
           </section>
         </main>
 
@@ -1321,6 +1396,12 @@ export default function Home() {
         isOpen={isModalOpen} 
         onClose={handleCloseModal} 
         openPaymentModal={handleOpenPaymentModal}
+      />
+      
+      {/* オンライン視聴モーダル */}
+      <OnlineViewerModal 
+        isOpen={isOnlineViewerModalOpen} 
+        onClose={handleCloseOnlineViewerModal} 
       />
       
       {/* 課金モーダル */}
