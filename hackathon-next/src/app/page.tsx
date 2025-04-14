@@ -1324,7 +1324,10 @@ export default function Home() {
             <div className="application-period mb-6">
               <div className="period-badge inline-block py-2 px-4 bg-gradient-to-r from-blue-900/50 to-purple-900/50 backdrop-blur-sm border border-blue-800/30 rounded-lg">
                 <p className="text-sm text-blue-300">
-                  <span className="font-semibold">募集期間</span>: 2025年4月14日(月) 〜 2025年4月25日(金)
+                  <span className="font-semibold">参加者募集期間</span>: 2025年4月14日(月) 〜 2025年4月25日(金)
+                </p>
+                <p className="text-sm text-blue-300">
+                  <span className="font-semibold">視聴者募集期間</span>:  〜 2025年8月15日(金)
                 </p>
               </div>
             </div>

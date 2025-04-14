@@ -224,14 +224,14 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
     }
   };
 
-  const [isPremiumUser, setIsPremiumUser] = useState<boolean>(false);
+  // const [isPremiumUser, setIsPremiumUser] = useState<boolean>(false);
   const [showPremiumWarning, setShowPremiumWarning] = useState<boolean>(false);
 
   // Check premium status on component mount
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const isPremium = localStorage.getItem('premium_user') === 'true';
-      setIsPremiumUser(isPremium);
+      // const isPremium = localStorage.getItem('premium_user') === 'true';
+      // setIsPremiumUser(isPremium);
     }
   }, [isOpen]);
 
@@ -258,10 +258,10 @@ export default function ApplicationModal({ isOpen, onClose, openPaymentModal }: 
     if (!validateForm()) return;
 
     // If user is not premium, show warning modal
-    if (!isPremiumUser) {
-      setShowPremiumWarning(true);
-      return;
-    }
+    // if (!isPremiumUser) {
+    //   setShowPremiumWarning(true);
+    //   return;
+    // }
 
     // Otherwise proceed with normal submission
     submitForm();
