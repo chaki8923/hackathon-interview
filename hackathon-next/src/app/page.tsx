@@ -17,6 +17,7 @@ import LikeButton from './components/LikeButton';
 import ApplicationModal from './components/ApplicationModal';
 import IntroAnimation from './components/IntroAnimation';
 import OnlineViewerModal from './components/OnlineViewerModal';
+import Link from 'next/link';
 
 // インタビューデータの型定義
 interface Interview {
@@ -750,6 +751,21 @@ export default function Home() {
 
       <div className="container mx-auto px-4">
         <header className="min-h-screen flex flex-col items-center justify-center text-center relative">
+          {/* Navigation links */}
+          <div className="fixed top-0 left-0 right-0 z-40 py-4 bg-gray-950/50 backdrop-blur-sm">
+            <div className="container mx-auto px-4 flex justify-end">
+              <nav>
+                <ul className="flex space-x-4 md:space-x-8">
+                  <li>
+                    <Link href="/blog" className="text-gray-300 hover:text-blue-400 transition-colors">
+                      ブログ
+                    </Link>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+          
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate-950/50 pointer-events-none"></div>
           <div className="header-content relative z-10">
             <h1 className="text-5xl md:text-7xl font-bold mb-4 text-white tracking-tighter relative overflow-hidden">
