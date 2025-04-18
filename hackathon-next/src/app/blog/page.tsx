@@ -318,7 +318,6 @@ export default function Blog() {
                 className="object-cover"
               />
             </div>
-            <p className={styles.imageCaption}>カレンダーに小さなタスクをびっしり書き込む様子</p>
 
             <h2 className="text-xl md:text-2xl font-bold mb-4 text-blue-400 border-b border-blue-900/50 pb-2">
               2. 「足を引っ張りそう…」という不安を和らげる方法
@@ -350,7 +349,6 @@ export default function Blog() {
                 className="object-cover"
               />
             </div>
-            <p className={styles.imageCaption}>ホワイトボードに役割を書き出すチーム</p>
 
             <h2 className="text-xl md:text-2xl font-bold mb-4 text-blue-400 border-b border-blue-900/50 pb-2">
               3. 「自信がない…」をポジティブに変える思考法
@@ -382,7 +380,6 @@ export default function Blog() {
                 className="object-cover"
               />
             </div>
-            <p className={styles.imageCaption}>小さな成果を喜ぶ人の表情</p>
 
             <h2 className="text-xl md:text-2xl font-bold mb-4 text-blue-400 border-b border-blue-900/50 pb-2">
               4. &#34;参加ハードル&#34;をグッと下げるコツ
@@ -427,7 +424,6 @@ export default function Blog() {
                 className="object-cover"
               />
             </div>
-            <p className={styles.imageCaption}>PCの前で笑顔でガッツポーズをする人</p>
 
             <p className="text-lg font-semibold text-blue-300 mt-8 mb-4">
               あなたの挑戦をチーム一同、全力で応援します！
