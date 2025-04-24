@@ -170,10 +170,10 @@ const blogPosts = {
     title: '社内ハッカソン、参加を迷っているあなたへ：不安を解消して一歩踏み出そう！',
     date: '2025年4月10日',
     author: 'ハッカソン運営チーム',
-    readTime: '約4分',
+    readTime: '約2分',
     content: `
       <p class="text-lg leading-relaxed mb-6">
-        皆さん、こんにちは！
+        皆さん、こんにちは！運営チームの杉村です！
       </p>
       
       <p class="mb-4">
