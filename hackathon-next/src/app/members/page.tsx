@@ -77,7 +77,7 @@ const teams: Team[] = [
           name: "木村 真人",
           role: "エンジニア",
           tools: ["-"],
-          technologies: ["-"],
+          technologies: ["Laravel", "React", "TypeScript"],
           comment: ""
         },
         {
