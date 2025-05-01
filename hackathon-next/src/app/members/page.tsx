@@ -955,7 +955,7 @@ export default function MembersPage() {
               margin: '0 auto'
             }}
           >
-            全26名・4チームがそれぞれの強みを活かして挑戦します！
+            全27名・4チームがそれぞれの強みを活かして挑戦します！
           </motion.p>
           
           <motion.div 
