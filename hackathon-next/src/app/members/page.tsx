@@ -12,6 +12,7 @@ interface TeamMember {
   role: string;
   tools: string[];
   technologies: string[];
+  comment: string;
 }
 
 interface Team {
@@ -35,49 +36,56 @@ const teams: Team[] = [
         name: "浪川 豊",
         role: "ディレクター",
         tools: ["-"],
-        technologies: ["-"]
+        technologies: ["-"],
+        comment: ""
       },
       {
         id: "alpha-2",
         name: "島津 恵",
         role: "バックエンドエンジニア",
         tools: ["Cursor", "Docker", "AWS", "Firebase", "GraphQL"],
-        technologies: ["Go", "TypeScript"]
+        technologies: ["Go", "TypeScript"],
+        comment: "がんばります！"
       },
       {
         id: "alpha-3",
         name: "リティカ",
         role: "エンジニア",
         tools: ["VSCode", "Windsurf", "Cursor"],
-        technologies: ["React", "Laravel", "Next.js"]
+        technologies: ["React", "Laravel", "Next.js"],
+        comment: ""
       },
       {
         id: "alpha-4",
         name: "小倉 奈々実",
         role: "デザイナー",
         tools: ["Figma", "Photoshop", "Illustrator", "VSCode", "Excel"],
-        technologies: ["-"]
+        technologies: ["-"],
+        comment: "雑用担当になりそうですがよろしくお願いします！企画とデザイン頑張ります。"
       },
       {
         id: "alpha-5",
         name: "猪野 萌夏",
         role: "デザイナー",
         tools: ["-"],
-        technologies: ["Figma"]
+        technologies: ["Figma"],
+        comment: ""
       },
       {
           id: "alpha-6",
           name: "木村 真人",
           role: "エンジニア",
           tools: ["-"],
-          technologies: ["-"]
+          technologies: ["-"],
+          comment: ""
         },
         {
           id: "alpha-7",
           name: "茶木 涼",
           role: "エンジニア",
           tools: ["Cursor", "MCP", "GoogleNoteBookLM", "imageFX"],
-          technologies: ["Go", "NEXT.js", "Python"]
+          technologies: ["Go", "NEXT.js", "Python"],
+          comment: "今年こそ優勝を手にして2年連続アワード9を受賞します"
         }
     ]
   },
@@ -92,49 +100,56 @@ const teams: Team[] = [
         name: "杉村 玲奈",
         role: "ディレクター",
         tools: ["-"],
-        technologies: ["-"]
+        technologies: ["-"],
+        comment: ""
       },
       {
         id: "beta-2",
         name: "村上享",
         role: "デザイナー",
         tools: ["Figma"],
-        technologies: ["Next.js"]
+        technologies: ["Next.js"],
+        comment: "めっちゃ良い物を作りたいです。宜しくお願い致します"
       },
       {
         id: "beta-3",
         name: "須賀 仁一",
         role: "アプリエンジニア",
         tools: ["Cursor", "Figma", "AWS", "Docker"],
-        technologies: ["RubyonRails", "Dart"]
+        technologies: ["RubyonRails", "Dart"],
+        comment: ""
       },
       {
         id: "beta-4",
         name: "小関 涼平",
         role: "全てを取り扱う者",
         tools: ["-"],
-        technologies: ["-"]
+        technologies: ["-"],
+        comment: ""
       },
       {
         id: "beta-5",
         name: "井後梨菜",
         role: "デザイナー",
         tools: ["-"],
-        technologies: ["-"]
+        technologies: ["-"],
+        comment: ""
       },
       {
         id: "beta-6",
         name: "岩崎 健太郎",
         role: "バックエンドエンジニア",
         tools: ["VSCode", "AWS", "GitHub", "Actions", "PostgreSQL"],
-        technologies: ["RubyonRails", "Laravel"]
+        technologies: ["RubyonRails", "Laravel"],
+        comment: ""
       },
       {
         id: "beta-7",
         name: "伊澤 遼介",
         role: "シリコンバレーエンジニア",
         tools: ["秀丸エディタ"],
-        technologies: ["jQuery"]
+        technologies: ["jQuery"],
+        comment: ""
       }
     ]
   },
@@ -149,42 +164,48 @@ const teams: Team[] = [
         name: "木村 沙恵子",
         role: "ディレクター",
         tools: ["-"],
-        technologies: ["-"]
+        technologies: ["-"],
+        comment: ""
       },
       {
         id: "gamma-2",
         name: "大高 拓己",
         role: "アプリエンジニア",
         tools: ["-"],
-        technologies: ["-"]
+        technologies: ["-"],
+        comment: ""
       },
       {
         id: "gamma-3",
         name: "太田 圭一",
         role: "デザイナー",
         tools: ["Figma"],
-        technologies: ["Python"]
+        technologies: ["Python"],
+        comment: ""
       },
       {
         id: "gamma-4",
         name: "東海林 拓真",
         role: "デザイナー",
         tools: ["Figma", "Photoshop", "Illustrator", "Excel", "Git"],
-        technologies: ["Java"]
+        technologies: ["Java"],
+        comment: "理解しきっていませんが、迷うことなく挑戦させていただきます🔥"
       },
       {
         id: "gamma-5",
         name: "浜口・チャーリー・裕介",
         role: "アシスタント・オフィサー",
         tools: ["Vim"],
-        technologies: ["DISCO"]
+        technologies: ["DISCO"],
+        comment: ""
       },
       {
         id: "gamma-6",
         name: "咽原 レイナ",
         role: "デザイナー",
         tools: ["-"],
-        technologies: ["-"]
+        technologies: ["-"],
+        comment: "がんばります！"
       }
     ]
   },
@@ -199,49 +220,56 @@ const teams: Team[] = [
         name: "宇野 智水",
         role: "ディレクター",
         tools: ["-"],
-        technologies: ["-"]
+        technologies: ["-"],
+        comment: "知識には欠けますが、やる気と元気はあります！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！よろしくお願いします！！！！！！！！！！！！！！！！"
       },
       {
         id: "delta-2",
         name: "松﨑 千尋",
         role: "ディレクター",
         tools: ["-"],
-        technologies: ["-"]
+        technologies: ["-"],
+        comment: ""
       },
       {
         id: "delta-3",
         name: "新谷 嘉朗",
         role: "デザイナー",
         tools: ["Figma"],
-        technologies: ["React", "Next.js"]
+        technologies: ["React", "Next.js"],
+        comment: ""
       },
       {
         id: "delta-4",
         name: "青山 有希",
         role: "フロントエンドエンジニア",
         tools: ["Cursor"],
-        technologies: [""]
+        technologies: [""],
+        comment: "フロント側の対応をやりたいです〜"
       },
       {
         id: "delta-5",
         name: "矢島 和花菜",
         role: "デザイナー",
         tools: ["Figma", "Illustrator"],
-        technologies: [""]
+        technologies: [""],
+        comment: ""
       },
       {
         id: "delta-6",
         name: "新井 俊也",
         role: "ガジェットエンジニア",
         tools: ["2B鉛筆"],
-        technologies: ["日本語"]
+        technologies: ["日本語"],
+        comment: ""
       },
       {
         id: "delta-7",
         name: "ケーシャブ",
         role: "エンジニア",
         tools: ["AWS", "Trae", "Supabase", "GraphQL", "TensorFlow", "PyTorch", "PostgreSQL", "Redis", "Kubernetes"],
-        technologies: ["Rust", "Go", "Lisp", "Elixir", "Laravel", "Python"]
+        technologies: ["Rust", "Go", "Lisp", "Elixir", "Laravel", "Python"],
+        comment: ""
       }
     ]
   }
@@ -389,6 +417,42 @@ const MemberDetailModal = ({ member, onClose }: { member: TeamMember | null, onC
               {member.name}
             </h2>
             <p style={{ color: '#93c5fd', marginBottom: '1.5rem' }}>{member.role}</p>
+            
+            {member.comment && member.comment.trim() !== '' && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                style={{
+                  marginBottom: '1.5rem',
+                  padding: '0.75rem 1rem',
+                  borderRadius: '0.5rem',
+                  backgroundColor: 'rgba(30, 58, 138, 0.3)',
+                  border: '1px solid rgba(59, 130, 246, 0.3)',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}
+              >
+                <div style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '4px',
+                  height: '100%',
+                  background: 'linear-gradient(to bottom, #3b82f6, #8b5cf6)'
+                }}></div>
+                
+                <p style={{ 
+                  fontSize: '1rem',
+                  lineHeight: '1.5rem',
+                  color: '#e2e8f0',
+                  paddingLeft: '0.5rem', 
+                  fontStyle: 'italic'
+                }}>
+                  "{member.comment}"
+                </p>
+              </motion.div>
+            )}
           </motion.div>
           
           {/* 技術スタック */}
@@ -696,6 +760,40 @@ const TeamCard = ({ team, index, onMemberClick }: { team: Team, index: number, o
             >
               <h4 style={{ color: 'white', fontWeight: 500, marginBottom: '0.25rem' }}>{member.name}</h4>
               <p style={{ fontSize: '0.875rem', lineHeight: '1.25rem', color: '#93c5fd' }}>{member.role}</p>
+              
+              {member.comment && member.comment.trim() !== '' && (
+                <motion.div 
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  transition={{ duration: 0.3, delay: 0.1 }}
+                  style={{ 
+                    marginTop: '0.75rem',
+                    borderLeft: '2px solid rgba(96, 165, 250, 0.7)',
+                    paddingLeft: '0.75rem',
+                    position: 'relative'
+                  }}
+                >
+                  <div 
+                    style={{ 
+                      position: 'absolute',
+                      top: 0,
+                      left: -1,
+                      width: '8px',
+                      height: '8px',
+                      borderRadius: '50%',
+                      backgroundColor: '#60a5fa'
+                    }}
+                  />
+                  <p style={{ 
+                    fontSize: '0.875rem', 
+                    lineHeight: '1.375rem', 
+                    color: '#e2e8f0',
+                    fontStyle: 'italic'
+                  }}>
+                    "{member.comment}"
+                  </p>
+                </motion.div>
+              )}
             </motion.div>
           ))}
         </motion.div>
