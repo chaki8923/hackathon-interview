@@ -124,9 +124,9 @@ const teams: Team[] = [
         id: "beta-4",
         name: "小関 涼平",
         role: "全てを取り扱う者",
-        tools: ["-"],
-        technologies: ["-"],
-        comment: ""
+        tools: ["Cursor"],
+        technologies: ["TypeScript", "Go", "Kotlin"],
+        comment: "ネイティブアプリ作ってみたいです。"
       },
       {
         id: "beta-5",
