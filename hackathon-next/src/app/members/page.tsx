@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { FaArrowLeft, FaTools, FaCode, FaLaptopCode } from 'react-icons/fa';
 
@@ -449,7 +450,7 @@ const MemberDetailModal = ({ member, onClose }: { member: TeamMember | null, onC
                   paddingLeft: '0.5rem', 
                   fontStyle: 'italic'
                 }}>
-                  "{member.comment}"
+                  &quot;{member.comment}&quot;
                 </p>
               </motion.div>
             )}
@@ -614,13 +615,12 @@ const TeamCard = ({ team, index, onMemberClick }: { team: Team, index: number, o
           background: 'linear-gradient(to bottom, transparent, rgba(17, 24, 39, 0.9))',
           zIndex: 10
         }}></div>
-        <div style={{ width: '100%', height: '100%' }}>
-          <img 
+        <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+          <Image 
             src={team.imageUrl} 
             alt={team.name} 
+            fill
             style={{
-              width: '100%',
-              height: '100%',
               objectFit: 'cover',
               objectPosition: 'top'
             }}
@@ -790,7 +790,7 @@ const TeamCard = ({ team, index, onMemberClick }: { team: Team, index: number, o
                     color: '#e2e8f0',
                     fontStyle: 'italic'
                   }}>
-                    "{member.comment}"
+                    &quot;{member.comment}&quot;
                   </p>
                 </motion.div>
               )}
