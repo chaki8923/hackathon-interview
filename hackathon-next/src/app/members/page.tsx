@@ -94,7 +94,7 @@ const teams: Team[] = [
     id: "team-beta",
     name: "ギャラクシーケンタウロス東京",
     description: "",
-    imageUrl: "/images/yomiuri.jpg",
+    imageUrl: "/images/iwasaki.jpg",
     members: [
       {
         id: "beta-1",
@@ -158,7 +158,7 @@ const teams: Team[] = [
     id: "team-gamma",
     name: "スーパーウルトラジャパン",
     description: "",
-    imageUrl: "/images/imo.jpg",
+    imageUrl: "/images/super.jpg",
     members: [
       {
         id: "gamma-1",
@@ -222,7 +222,7 @@ const teams: Team[] = [
     id: "team-delta",
     name: "蒼々しいやつら",
     description: "",
-    imageUrl: "/images/tatu01.jpg",
+    imageUrl: "/images/aoao.jpg",
     members: [
       {
         id: "delta-1",
