@@ -28,9 +28,9 @@ interface Team {
 const teams: Team[] = [
   {
     id: "team-alpha",
-    name: "Namikawa Team",
+    name: "イノ☆リティカ島のナミチャグラキム共和国",
     description: "",
-    imageUrl: "/images/nami.jpg",
+    imageUrl: "/images/ino2.png",
     members: [
       {
         id: "alpha-1",
@@ -92,7 +92,7 @@ const teams: Team[] = [
   },
   {
     id: "team-beta",
-    name: "Sugimura Team",
+    name: "ギャラクシーケンタウロス東京",
     description: "",
     imageUrl: "/images/yomiuri.jpg",
     members: [
@@ -156,7 +156,7 @@ const teams: Team[] = [
   },
   {
     id: "team-gamma",
-    name: "Kimura Team",
+    name: "スーパーウルトラジャパン",
     description: "",
     imageUrl: "/images/imo.jpg",
     members: [
@@ -207,12 +207,20 @@ const teams: Team[] = [
         tools: ["-"],
         technologies: ["-"],
         comment: "がんばります！"
+      },
+      {
+        id: "gamma-7",
+        name: "平野宇教",
+        role: "エンジニア",
+        tools: ["-"],
+        technologies: ["-"],
+        comment: ""
       }
     ]
   },
   {
     id: "team-delta",
-    name: "Uno&Matuzaki Team",
+    name: "蒼々しいやつら",
     description: "",
     imageUrl: "/images/tatu01.jpg",
     members: [
@@ -814,9 +822,15 @@ export default function MembersPage() {
         .team-members-grid {
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
+        .evaluation-criteria-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
       }
       @media (min-width: 1024px) {
         .team-members-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        .evaluation-criteria-grid {
           grid-template-columns: repeat(3, minmax(0, 1fr));
         }
       }
@@ -955,7 +969,7 @@ export default function MembersPage() {
               margin: '0 auto'
             }}
           >
-            全27名・4チームがそれぞれの強みを活かして挑戦します！
+            全28名・4チームがそれぞれの強みを活かして挑戦します！
           </motion.p>
           
           <motion.div 
@@ -1003,6 +1017,460 @@ export default function MembersPage() {
           <p style={{ color: '#9ca3af' }}>&copy; 2025 社内ハッカソン運営チーム</p>
         </div>
       </footer>
+      
+      {/* 審査項目と審査基準セクション */}
+      <section style={{
+        backgroundColor: 'rgba(17, 24, 39, 0.8)',
+        backdropFilter: 'blur(8px)',
+        borderTop: '1px solid #1f2937',
+        padding: '4rem 0'
+      }}>
+        <div style={{
+          maxWidth: '80rem',
+          margin: '0 auto',
+          padding: '0 1rem'
+        }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            style={{ textAlign: 'center', marginBottom: '3rem' }}
+          >
+            <h2 style={{
+              fontSize: 'clamp(1.875rem, 5vw, 2.25rem)',
+              fontWeight: 700,
+              marginBottom: '1rem',
+              background: 'linear-gradient(to right, #60a5fa, #c084fc)',
+              WebkitBackgroundClip: 'text',
+              backgroundClip: 'text',
+              color: 'transparent'
+            }}>
+              審査項目と審査基準
+            </h2>
+            <p style={{ color: '#d1d5db', maxWidth: '48rem', margin: '0 auto' }}>
+              全6項目、各5点満点（合計30点満点）で評価します
+            </p>
+          </motion.div>
+          
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr',
+            gap: '2rem',
+            position: 'relative'
+          }}
+          className="evaluation-criteria-grid"
+          >
+            {/* 項目1: 企画力 */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.5 }}
+              style={{
+                backgroundColor: 'rgba(30, 41, 59, 0.5)',
+                borderRadius: '1rem',
+                overflow: 'hidden',
+                border: '1px solid #334155',
+                position: 'relative'
+              }}
+            >
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                height: '4px',
+                background: 'linear-gradient(to right, #3b82f6, #60a5fa)'
+              }}></div>
+              <div style={{ padding: '1.5rem' }}>
+                <h3 style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 600,
+                  marginBottom: '1rem',
+                  color: 'white',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}>
+                  <span style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '2rem',
+                    height: '2rem',
+                    borderRadius: '50%',
+                    backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                    border: '1px solid rgba(59, 130, 246, 0.5)',
+                    marginRight: '0.75rem'
+                  }}>1</span>
+                  企画力
+                </h3>
+                <div style={{ marginBottom: '1rem' }}>
+                  <ul style={{ color: '#e2e8f0', paddingLeft: '1.5rem' }}>
+                    <li style={{ marginBottom: '0.5rem' }}>着眼点のユニークさ、視点の新しさ</li>
+                    <li style={{ marginBottom: '0.5rem' }}>解決すべき課題や狙いの明確さ</li>
+                    <li>社会性・共感性のあるテーマか</li>
+                  </ul>
+                </div>
+                <div style={{
+                  backgroundColor: 'rgba(15, 23, 42, 0.3)',
+                  borderRadius: '0.5rem',
+                  padding: '1rem',
+                  border: '1px solid rgba(51, 65, 85, 0.5)'
+                }}>
+                  <h4 style={{ color: '#94a3b8', marginBottom: '0.5rem', fontSize: '0.875rem' }}>スコア目安</h4>
+                  <ul style={{ color: '#cbd5e1', fontSize: '0.875rem', paddingLeft: '1.5rem' }}>
+                    <li style={{ marginBottom: '0.25rem' }}>5：着想・構想が非常に優れており、意義も明確</li>
+                    <li style={{ marginBottom: '0.25rem' }}>4：よく練られた企画で、ユニークさもある</li>
+                    <li style={{ marginBottom: '0.25rem' }}>3：筋は通っているがやや一般的</li>
+                    <li style={{ marginBottom: '0.25rem' }}>2：新しさや具体性に欠ける</li>
+                    <li>1：意図や意義が不明瞭</li>
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+            
+            {/* 項目2: 技術力 */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              style={{
+                backgroundColor: 'rgba(30, 41, 59, 0.5)',
+                borderRadius: '1rem',
+                overflow: 'hidden',
+                border: '1px solid #334155',
+                position: 'relative'
+              }}
+            >
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                height: '4px',
+                background: 'linear-gradient(to right, #8b5cf6, #a78bfa)'
+              }}></div>
+              <div style={{ padding: '1.5rem' }}>
+                <h3 style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 600,
+                  marginBottom: '1rem',
+                  color: 'white',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}>
+                  <span style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '2rem',
+                    height: '2rem',
+                    borderRadius: '50%',
+                    backgroundColor: 'rgba(139, 92, 246, 0.2)',
+                    border: '1px solid rgba(139, 92, 246, 0.5)',
+                    marginRight: '0.75rem'
+                  }}>2</span>
+                  技術力
+                </h3>
+                <div style={{ marginBottom: '1rem' }}>
+                  <ul style={{ color: '#e2e8f0', paddingLeft: '1.5rem' }}>
+                    <li style={{ marginBottom: '0.5rem' }}>実装の難易度や工夫</li>
+                    <li style={{ marginBottom: '0.5rem' }}>技術スタックの挑戦性</li>
+                    <li>コードや構造の設計力</li>
+                  </ul>
+                </div>
+                <div style={{
+                  backgroundColor: 'rgba(15, 23, 42, 0.3)',
+                  borderRadius: '0.5rem',
+                  padding: '1rem',
+                  border: '1px solid rgba(51, 65, 85, 0.5)'
+                }}>
+                  <h4 style={{ color: '#94a3b8', marginBottom: '0.5rem', fontSize: '0.875rem' }}>スコア目安</h4>
+                  <ul style={{ color: '#cbd5e1', fontSize: '0.875rem', paddingLeft: '1.5rem' }}>
+                    <li style={{ marginBottom: '0.25rem' }}>5：高度な技術と工夫、構造も洗練</li>
+                    <li style={{ marginBottom: '0.25rem' }}>4：応用的な技術と丁寧な実装</li>
+                    <li style={{ marginBottom: '0.25rem' }}>3：標準的な構成で安定</li>
+                    <li style={{ marginBottom: '0.25rem' }}>2：簡易実装、やや物足りない</li>
+                    <li>1：テンプレート中心、独自性に乏しい</li>
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+            
+            {/* 項目3: 完成度 */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+              style={{
+                backgroundColor: 'rgba(30, 41, 59, 0.5)',
+                borderRadius: '1rem',
+                overflow: 'hidden',
+                border: '1px solid #334155',
+                position: 'relative'
+              }}
+            >
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                height: '4px',
+                background: 'linear-gradient(to right, #10b981, #34d399)'
+              }}></div>
+              <div style={{ padding: '1.5rem' }}>
+                <h3 style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 600,
+                  marginBottom: '1rem',
+                  color: 'white',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}>
+                  <span style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '2rem',
+                    height: '2rem',
+                    borderRadius: '50%',
+                    backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                    border: '1px solid rgba(16, 185, 129, 0.5)',
+                    marginRight: '0.75rem'
+                  }}>3</span>
+                  完成度
+                </h3>
+                <div style={{ marginBottom: '1rem' }}>
+                  <ul style={{ color: '#e2e8f0', paddingLeft: '1.5rem' }}>
+                    <li style={{ marginBottom: '0.5rem' }}>想定機能が実装されているか</li>
+                    <li style={{ marginBottom: '0.5rem' }}>デモ可能な状態か</li>
+                    <li>バグやエラーの有無</li>
+                  </ul>
+                </div>
+                <div style={{
+                  backgroundColor: 'rgba(15, 23, 42, 0.3)',
+                  borderRadius: '0.5rem',
+                  padding: '1rem',
+                  border: '1px solid rgba(51, 65, 85, 0.5)'
+                }}>
+                  <h4 style={{ color: '#94a3b8', marginBottom: '0.5rem', fontSize: '0.875rem' }}>スコア目安</h4>
+                  <ul style={{ color: '#cbd5e1', fontSize: '0.875rem', paddingLeft: '1.5rem' }}>
+                    <li style={{ marginBottom: '0.25rem' }}>5：安定して動作、仕上がりも高水準</li>
+                    <li style={{ marginBottom: '0.25rem' }}>4：十分に使える状態、丁寧に作られている</li>
+                    <li style={{ marginBottom: '0.25rem' }}>3：基本機能あり、多少荒削り</li>
+                    <li style={{ marginBottom: '0.25rem' }}>2：動作不安定、機能未完</li>
+                    <li>1：完成に至らず、動作困難</li>
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+            
+            {/* 項目4: 体験・デザイン */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+              style={{
+                backgroundColor: 'rgba(30, 41, 59, 0.5)',
+                borderRadius: '1rem',
+                overflow: 'hidden',
+                border: '1px solid #334155',
+                position: 'relative'
+              }}
+            >
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                height: '4px',
+                background: 'linear-gradient(to right, #f59e0b, #fbbf24)'
+              }}></div>
+              <div style={{ padding: '1.5rem' }}>
+                <h3 style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 600,
+                  marginBottom: '1rem',
+                  color: 'white',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}>
+                  <span style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '2rem',
+                    height: '2rem',
+                    borderRadius: '50%',
+                    backgroundColor: 'rgba(245, 158, 11, 0.2)',
+                    border: '1px solid rgba(245, 158, 11, 0.5)',
+                    marginRight: '0.75rem'
+                  }}>4</span>
+                  体験・デザイン
+                </h3>
+                <div style={{ marginBottom: '1rem' }}>
+                  <ul style={{ color: '#e2e8f0', paddingLeft: '1.5rem' }}>
+                    <li style={{ marginBottom: '0.5rem' }}>操作のしやすさ、直感性</li>
+                    <li style={{ marginBottom: '0.5rem' }}>見た目・構成のわかりやすさ</li>
+                    <li>ユーザーを意識した設計</li>
+                  </ul>
+                </div>
+                <div style={{
+                  backgroundColor: 'rgba(15, 23, 42, 0.3)',
+                  borderRadius: '0.5rem',
+                  padding: '1rem',
+                  border: '1px solid rgba(51, 65, 85, 0.5)'
+                }}>
+                  <h4 style={{ color: '#94a3b8', marginBottom: '0.5rem', fontSize: '0.875rem' }}>スコア目安</h4>
+                  <ul style={{ color: '#cbd5e1', fontSize: '0.875rem', paddingLeft: '1.5rem' }}>
+                    <li style={{ marginBottom: '0.25rem' }}>5：極めて自然で快適な操作感、体験設計も的確</li>
+                    <li style={{ marginBottom: '0.25rem' }}>4：十分に配慮されたUI、統一感あり</li>
+                    <li style={{ marginBottom: '0.25rem' }}>3：最低限の使いやすさを確保</li>
+                    <li style={{ marginBottom: '0.25rem' }}>2：使いづらさや不親切な点が目立つ</li>
+                    <li>1：UI・UX設計が未着手、または乱雑</li>
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+            
+            {/* 項目5: プロセス・取り組み姿勢 */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+              style={{
+                backgroundColor: 'rgba(30, 41, 59, 0.5)',
+                borderRadius: '1rem',
+                overflow: 'hidden',
+                border: '1px solid #334155',
+                position: 'relative'
+              }}
+            >
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                height: '4px',
+                background: 'linear-gradient(to right, #ec4899, #f472b6)'
+              }}></div>
+              <div style={{ padding: '1.5rem' }}>
+                <h3 style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 600,
+                  marginBottom: '1rem',
+                  color: 'white',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}>
+                  <span style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '2rem',
+                    height: '2rem',
+                    borderRadius: '50%',
+                    backgroundColor: 'rgba(236, 72, 153, 0.2)',
+                    border: '1px solid rgba(236, 72, 153, 0.5)',
+                    marginRight: '0.75rem'
+                  }}>5</span>
+                  プロセス・取り組み姿勢
+                </h3>
+                <div style={{ marginBottom: '1rem' }}>
+                  <ul style={{ color: '#e2e8f0', paddingLeft: '1.5rem' }}>
+                    <li style={{ marginBottom: '0.5rem' }}>チーム内の連携・役割分担</li>
+                    <li style={{ marginBottom: '0.5rem' }}>中間発表やフィードバックの活用</li>
+                    <li style={{ marginBottom: '0.5rem' }}>限られた期間の中での工夫と継続的な進行</li>
+                    <li>発表時の時間配分・構成（限られた時間内で伝える工夫）</li>
+                  </ul>
+                </div>
+                <div style={{
+                  backgroundColor: 'rgba(15, 23, 42, 0.3)',
+                  borderRadius: '0.5rem',
+                  padding: '1rem',
+                  border: '1px solid rgba(51, 65, 85, 0.5)'
+                }}>
+                  <h4 style={{ color: '#94a3b8', marginBottom: '0.5rem', fontSize: '0.875rem' }}>スコア目安</h4>
+                  <ul style={{ color: '#cbd5e1', fontSize: '0.875rem', paddingLeft: '1.5rem' }}>
+                    <li style={{ marginBottom: '0.25rem' }}>5：進め方に一貫性があり、発表も時間内でわかりやすく構成されていた</li>
+                    <li style={{ marginBottom: '0.25rem' }}>4：連携や改善の姿勢が見え、発表も概ね適切な時間配分</li>
+                    <li style={{ marginBottom: '0.25rem' }}>3：特に問題なく進行・発表されていた</li>
+                    <li style={{ marginBottom: '0.25rem' }}>2：連携や発表構成にやや粗さが見える</li>
+                    <li>1：プロセスが曖昧、発表も時間配分に問題あり</li>
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+            
+            {/* 項目6: AI活用 */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+              style={{
+                backgroundColor: 'rgba(30, 41, 59, 0.5)',
+                borderRadius: '1rem',
+                overflow: 'hidden',
+                border: '1px solid #334155',
+                position: 'relative'
+              }}
+            >
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                height: '4px',
+                background: 'linear-gradient(to right, #06b6d4, #22d3ee)'
+              }}></div>
+              <div style={{ padding: '1.5rem' }}>
+                <h3 style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 600,
+                  marginBottom: '1rem',
+                  color: 'white',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}>
+                  <span style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '2rem',
+                    height: '2rem',
+                    borderRadius: '50%',
+                    backgroundColor: 'rgba(6, 182, 212, 0.2)',
+                    border: '1px solid rgba(6, 182, 212, 0.5)',
+                    marginRight: '0.75rem'
+                  }}>6</span>
+                  AI活用
+                </h3>
+                <div style={{ marginBottom: '1rem' }}>
+                  <ul style={{ color: '#e2e8f0', paddingLeft: '1.5rem' }}>
+                    <li style={{ marginBottom: '0.5rem' }}>プロダクトにAI技術をどう組み込んだか</li>
+                    <li style={{ marginBottom: '0.5rem' }}>AI活用が課題解決や体験価値にどう貢献しているか</li>
+                    <li>モデル選定やプロンプト設計に工夫があるか</li>
+                  </ul>
+                </div>
+                <div style={{
+                  backgroundColor: 'rgba(15, 23, 42, 0.3)',
+                  borderRadius: '0.5rem',
+                  padding: '1rem',
+                  border: '1px solid rgba(51, 65, 85, 0.5)'
+                }}>
+                  <h4 style={{ color: '#94a3b8', marginBottom: '0.5rem', fontSize: '0.875rem' }}>スコア目安</h4>
+                  <ul style={{ color: '#cbd5e1', fontSize: '0.875rem', paddingLeft: '1.5rem' }}>
+                    <li style={{ marginBottom: '0.25rem' }}>5：AI活用が非常に的確で、プロダクト価値を明確に高めている</li>
+                    <li style={{ marginBottom: '0.25rem' }}>4：活用意図が明確で、実装にも工夫が見られる</li>
+                    <li style={{ marginBottom: '0.25rem' }}>3：効果的に活用されているが、目新しさや工夫はやや控えめ</li>
+                    <li style={{ marginBottom: '0.25rem' }}>2：AIを使っているが、目的や活かし方に曖昧さがある</li>
+                    <li>1：AI活用なし、または使用しているが効果や意図が読み取れない</li>
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
       
       {/* メンバー詳細モーダル */}
       {selectedMember && (
