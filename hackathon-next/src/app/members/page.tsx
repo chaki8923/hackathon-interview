@@ -863,6 +863,56 @@ export default function MembersPage() {
       .team-header-toggle:active {
         transform: translateY(0);
       }
+      
+      /* ロゴのグロウエフェクト */
+      @keyframes logoGlow {
+        0% {
+          filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.7));
+        }
+        50% {
+          filter: drop-shadow(0 0 15px rgba(139, 92, 246, 0.9)) drop-shadow(0 0 25px rgba(59, 130, 246, 0.5));
+        }
+        100% {
+          filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.7));
+        }
+      }
+      
+      .logo-glow {
+        animation: logoGlow 3s ease-in-out infinite;
+      }
+      
+      /* メタリックエフェクト */
+      .logo-container {
+        position: relative;
+      }
+      
+      .logo-container::before {
+        content: '';
+        position: absolute;
+        top: -10%;
+        left: -10%;
+        right: -10%;
+        bottom: -10%;
+        background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transform: rotate(25deg);
+        pointer-events: none;
+        z-index: 2;
+        animation: metalShine 6s ease-in-out infinite;
+      }
+      
+      @keyframes metalShine {
+        0% {
+          opacity: 0;
+          transform: translate(-100%, -100%) rotate(25deg);
+        }
+        10%, 100% {
+          opacity: 0;
+        }
+        50% {
+          opacity: 0.5;
+          transform: translate(100%, 100%) rotate(25deg);
+        }
+      }
     `;
     document.head.appendChild(style);
     
@@ -898,16 +948,17 @@ export default function MembersPage() {
       {/* ヘッダー */}
       <header style={{
         borderBottom: '1px solid #1f2937',
-        backgroundColor: 'rgba(17, 24, 39, 0.5)',
+        backgroundColor: 'rgba(17, 24, 39, 0.8)',
         backdropFilter: 'blur(8px)',
         position: 'sticky',
         top: 0,
-        zIndex: 10
+        zIndex: 10,
+        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
       }}>
         <div style={{
           maxWidth: '80rem',
           margin: '0 auto',
-          padding: '1rem',
+          padding: '0.75rem 1rem',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between'
@@ -931,20 +982,106 @@ export default function MembersPage() {
         maxWidth: '80rem',
         margin: '0 auto',
         padding: '1rem',
-        paddingTop: '3rem',
+        paddingTop: '0',
         paddingBottom: '3rem'
       }}>
-        {/* ヒーローセクション */}
+        {/* ロゴヒーローセクション */}
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
-          style={{ textAlign: 'center', marginBottom: '4rem' }}
+          style={{ 
+            textAlign: 'center', 
+            marginBottom: '3rem',
+            position: 'relative',
+            overflow: 'hidden',
+            backgroundColor: 'rgba(15, 23, 42, 0.7)',
+            borderRadius: '1rem',
+            padding: '3rem 1rem',
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+            border: '1px solid rgba(51, 65, 85, 0.5)',
+            marginTop: '2rem'
+          }}
         >
+          {/* メタリックな装飾要素 */}
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '4px',
+            background: 'linear-gradient(to right, #3b82f6, #8b5cf6, #ec4899, #f59e0b)',
+          }}></div>
+          
+          <div style={{
+            position: 'absolute',
+            top: '10%',
+            left: '-5%',
+            width: '40%',
+            height: '60%',
+            background: 'radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0) 70%)',
+            filter: 'blur(40px)',
+            borderRadius: '50%',
+            transform: 'rotate(-15deg)',
+            zIndex: 0
+          }}></div>
+          
+          <div style={{
+            position: 'absolute',
+            bottom: '10%',
+            right: '-5%',
+            width: '40%',
+            height: '60%',
+            background: 'radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, rgba(236, 72, 153, 0) 70%)',
+            filter: 'blur(40px)',
+            borderRadius: '50%',
+            transform: 'rotate(15deg)',
+            zIndex: 0
+          }}></div>
+          
+          {/* ロゴ */}
+          <motion.div
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ 
+              delay: 0.2, 
+              duration: 0.5,
+              type: "spring",
+              stiffness: 100
+            }}
+            style={{
+              position: 'relative',
+              zIndex: 1,
+              marginBottom: '2rem',
+              display: 'flex',
+              justifyContent: 'center'
+            }}
+          >
+            <div style={{
+              position: 'relative',
+              width: '440px', 
+              height: '280px',
+              filter: 'drop-shadow(0 0 15px rgba(59, 130, 246, 0.5))',
+              transform: 'perspective(1000px) rotateX(5deg)',
+            }}
+            className="logo-container"
+            >
+              <Image
+                src="/images/logo.jpg"
+                alt="ハッカソンロゴ"
+                fill
+                style={{ 
+                  objectFit: 'contain',
+                }}
+                className="logo-glow"
+              />
+            </div>
+          </motion.div>
+          
           <motion.h1 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: 0.4 }}
             style={{
               fontSize: 'clamp(2.25rem, 8vw, 3rem)',
               fontWeight: 700,
@@ -952,21 +1089,27 @@ export default function MembersPage() {
               background: 'linear-gradient(to right, #60a5fa, #c084fc, #f472b6)',
               WebkitBackgroundClip: 'text',
               backgroundClip: 'text',
-              color: 'transparent'
+              color: 'transparent',
+              position: 'relative',
+              zIndex: 1,
+              textShadow: '0 2px 10px rgba(0, 0, 0, 0.3)'
             }}
           >
             ハッカソン参加メンバー
           </motion.h1>
+          
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
+            transition={{ delay: 0.5 }}
             style={{
               fontSize: '1.25rem',
               lineHeight: '1.75rem',
               color: '#d1d5db',
               maxWidth: '48rem',
-              margin: '0 auto'
+              margin: '0 auto',
+              position: 'relative',
+              zIndex: 1
             }}
           >
             全28名・4チームがそれぞれの強みを活かして挑戦します！
@@ -975,18 +1118,52 @@ export default function MembersPage() {
           <motion.div 
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.4 }}
+            transition={{ delay: 0.6 }}
             style={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               gap: '0.5rem',
-              marginTop: '2rem'
+              marginTop: '2rem',
+              position: 'relative',
+              zIndex: 1
             }}
           >
-            <div style={{ width: '0.75rem', height: '0.75rem', borderRadius: '9999px', backgroundColor: '#3b82f6' }}></div>
-            <div style={{ width: '0.75rem', height: '0.75rem', borderRadius: '9999px', backgroundColor: '#8b5cf6' }}></div>
-            <div style={{ width: '0.75rem', height: '0.75rem', borderRadius: '9999px', backgroundColor: '#ec4899' }}></div>
+            <motion.div 
+              animate={{ 
+                boxShadow: ['0 0 5px #3b82f6', '0 0 15px #3b82f6', '0 0 5px #3b82f6'] 
+              }}
+              transition={{ 
+                duration: 2, 
+                repeat: Infinity,
+                repeatType: 'reverse'
+              }}
+              style={{ width: '0.75rem', height: '0.75rem', borderRadius: '9999px', backgroundColor: '#3b82f6' }}
+            ></motion.div>
+            <motion.div 
+              animate={{ 
+                boxShadow: ['0 0 5px #8b5cf6', '0 0 15px #8b5cf6', '0 0 5px #8b5cf6'] 
+              }}
+              transition={{ 
+                duration: 2.5, 
+                repeat: Infinity,
+                repeatType: 'reverse',
+                delay: 0.3
+              }}
+              style={{ width: '0.75rem', height: '0.75rem', borderRadius: '9999px', backgroundColor: '#8b5cf6' }}
+            ></motion.div>
+            <motion.div 
+              animate={{ 
+                boxShadow: ['0 0 5px #ec4899', '0 0 15px #ec4899', '0 0 5px #ec4899'] 
+              }}
+              transition={{ 
+                duration: 2.2, 
+                repeat: Infinity,
+                repeatType: 'reverse',
+                delay: 0.6
+              }}
+              style={{ width: '0.75rem', height: '0.75rem', borderRadius: '9999px', backgroundColor: '#ec4899' }}
+            ></motion.div>
           </motion.div>
         </motion.div>
         
