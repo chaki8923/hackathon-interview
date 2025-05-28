@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: {
     images: [
       {
-        url: "./images/logo.png",
+        url: "./images/logo.jpg",
         width: 1200,
         height: 630,
         alt: "2025 Hackathon",

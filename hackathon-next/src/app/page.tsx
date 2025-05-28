@@ -788,7 +788,7 @@ export default function Home() {
                   <div className="absolute inset-0 -translate-x-1/2 -translate-y-1/2 bg-blue-500 rounded-full opacity-20 blur-3xl animate-pulse-glow" style={{ width: '350px', height: '350px' }}></div>
                   <div className="absolute inset-0 -translate-x-1/2 -translate-y-1/2 bg-purple-500 rounded-full opacity-15 blur-3xl animate-pulse-glow" style={{ width: '300px', height: '300px', animationDelay: '0.5s' }}></div>
                   <Image 
-                    src="/images/logo.png" 
+                    src="/images/logo.jpg" 
                     alt="ハッカソンロゴ" 
                     width={400} 
                     height={400} 
