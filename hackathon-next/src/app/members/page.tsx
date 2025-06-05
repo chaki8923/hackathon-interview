@@ -21,6 +21,10 @@ interface Team {
   name: string;
   description: string;
   imageUrl: string;
+  product: {
+    name: string;
+    description: string;
+  };
   members: TeamMember[];
 }
 
@@ -31,6 +35,10 @@ const teams: Team[] = [
     name: "イノ☆リティカ島のナミチャグラキム共和国",
     description: "",
     imageUrl: "/images/ino2.png",
+    product: {
+      name: "meguru",
+      description: "フードロス削減サービス"
+    },
     members: [
       {
         id: "alpha-1",
@@ -95,6 +103,10 @@ const teams: Team[] = [
     name: "ギャラクシーケンタウロス東京",
     description: "",
     imageUrl: "/images/iwasaki.jpg",
+    product: {
+      name: "日本人の気疲れを癒す新感覚のSNS",
+      description: "気疲れを解消するコミュニケーションプラットフォーム"
+    },
     members: [
       {
         id: "beta-1",
@@ -159,6 +171,10 @@ const teams: Team[] = [
     name: "スーパーウルトラジャパン",
     description: "",
     imageUrl: "/images/super.jpg",
+    product: {
+      name: "気持ちスタンプ日記",
+      description: "感情を可視化する新しい日記アプリ"
+    },
     members: [
       {
         id: "gamma-1",
@@ -223,6 +239,10 @@ const teams: Team[] = [
     name: "蒼々しいやつら",
     description: "",
     imageUrl: "/images/aoao.jpg",
+    product: {
+      name: "ランチマッチングサービス",
+      description: "ランチタイムを通じた新しい出会いの場"
+    },
     members: [
       {
         id: "delta-1",
@@ -658,6 +678,184 @@ const TeamCard = ({ team, index, onMemberClick }: { team: Team, index: number, o
           </motion.p>
         </div>
       </div>
+      
+      {/* プロダクトセクション */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: index * 0.1 + 0.4, duration: 0.5 }}
+        style={{
+          margin: '1.5rem',
+          marginBottom: '0',
+          backgroundColor: 'rgba(15, 23, 42, 0.8)',
+          backdropFilter: 'blur(8px)',
+          borderRadius: '0.75rem',
+          overflow: 'hidden',
+          border: '1px solid rgba(51, 65, 85, 0.5)',
+          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+          position: 'relative'
+        }}
+      >
+        {/* グラデーションボーダー */}
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: '3px',
+          background: index === 0 
+            ? 'linear-gradient(to right, #3b82f6, #60a5fa)' 
+            : index === 1 
+            ? 'linear-gradient(to right, #8b5cf6, #a78bfa)'
+            : index === 2 
+            ? 'linear-gradient(to right, #10b981, #34d399)'
+            : 'linear-gradient(to right, #f59e0b, #fbbf24)'
+        }}></div>
+        
+        {/* パーティクルエフェクト */}
+        <div style={{
+          position: 'absolute',
+          top: '0.5rem',
+          right: '1rem',
+          width: '4px',
+          height: '4px',
+          borderRadius: '50%',
+          backgroundColor: index === 0 ? '#3b82f6' : index === 1 ? '#8b5cf6' : index === 2 ? '#10b981' : '#f59e0b',
+          opacity: 0.7,
+          boxShadow: `0 0 10px ${index === 0 ? '#3b82f6' : index === 1 ? '#8b5cf6' : index === 2 ? '#10b981' : '#f59e0b'}`
+        }}></div>
+        
+        <div style={{ padding: '1.5rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.75rem' }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '2rem',
+              height: '2rem',
+              borderRadius: '50%',
+              backgroundColor: index === 0 
+                ? 'rgba(59, 130, 246, 0.2)' 
+                : index === 1 
+                ? 'rgba(139, 92, 246, 0.2)'
+                : index === 2 
+                ? 'rgba(16, 185, 129, 0.2)'
+                : 'rgba(245, 158, 11, 0.2)',
+              border: `1px solid ${index === 0 ? 'rgba(59, 130, 246, 0.5)' : index === 1 ? 'rgba(139, 92, 246, 0.5)' : index === 2 ? 'rgba(16, 185, 129, 0.5)' : 'rgba(245, 158, 11, 0.5)'}`,
+              marginRight: '0.75rem',
+              fontSize: '0.875rem',
+              color: 'white',
+              fontWeight: 600
+            }}>
+              🚀
+            </div>
+            <h3 style={{
+              fontSize: '1.125rem',
+              fontWeight: 600,
+              color: 'white',
+              margin: 0
+            }}>
+              プロダクト
+            </h3>
+          </div>
+          
+          <motion.div
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: index * 0.1 + 0.5 }}
+            style={{
+              marginBottom: '0.75rem'
+            }}
+          >
+            <h4 style={{
+              fontSize: '1.25rem',
+              fontWeight: 700,
+              background: index === 0 
+                ? 'linear-gradient(to right, #60a5fa, #93c5fd)' 
+                : index === 1 
+                ? 'linear-gradient(to right, #a78bfa, #c4b5fd)'
+                : index === 2 
+                ? 'linear-gradient(to right, #34d399, #6ee7b7)'
+                : 'linear-gradient(to right, #fbbf24, #fcd34d)',
+              WebkitBackgroundClip: 'text',
+              backgroundClip: 'text',
+              color: 'transparent',
+              marginBottom: '0.5rem',
+              lineHeight: '1.6'
+            }}>
+              {team.product.name}
+            </h4>
+            <p style={{
+              color: '#e2e8f0',
+              fontSize: '0.9rem',
+              lineHeight: '1.5',
+              opacity: 0.9
+            }}>
+              {team.product.description}
+            </p>
+          </motion.div>
+          
+          {/* 装飾的な要素 */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            marginTop: '1rem'
+          }}>
+            <motion.div
+              animate={{ 
+                scale: [1, 1.1, 1],
+                opacity: [0.5, 0.8, 0.5]
+              }}
+              transition={{ 
+                duration: 2, 
+                repeat: Infinity,
+                delay: index * 0.3
+              }}
+              style={{
+                width: '6px',
+                height: '6px',
+                borderRadius: '50%',
+                backgroundColor: index === 0 ? '#3b82f6' : index === 1 ? '#8b5cf6' : index === 2 ? '#10b981' : '#f59e0b'
+              }}
+            ></motion.div>
+            <motion.div
+              animate={{ 
+                scale: [1, 1.1, 1],
+                opacity: [0.5, 0.8, 0.5]
+              }}
+              transition={{ 
+                duration: 2.5, 
+                repeat: Infinity,
+                delay: index * 0.3 + 0.2
+              }}
+              style={{
+                width: '4px',
+                height: '4px',
+                borderRadius: '50%',
+                backgroundColor: index === 0 ? '#60a5fa' : index === 1 ? '#a78bfa' : index === 2 ? '#34d399' : '#fbbf24'
+              }}
+            ></motion.div>
+            <motion.div
+              animate={{ 
+                scale: [1, 1.1, 1],
+                opacity: [0.5, 0.8, 0.5]
+              }}
+              transition={{ 
+                duration: 2.2, 
+                repeat: Infinity,
+                delay: index * 0.3 + 0.4
+              }}
+              style={{
+                width: '8px',
+                height: '8px',
+                borderRadius: '50%',
+                backgroundColor: index === 0 ? '#93c5fd' : index === 1 ? '#c4b5fd' : index === 2 ? '#6ee7b7' : '#fcd34d'
+              }}
+            ></motion.div>
+          </div>
+        </div>
+      </motion.div>
       
       {/* メンバーリスト */}
       <div style={{ padding: '1.5rem' }}>
@@ -1499,11 +1697,11 @@ export default function MembersPage() {
                 }}>
                   <h4 style={{ color: '#94a3b8', marginBottom: '0.5rem', fontSize: '0.875rem' }}>スコア目安</h4>
                   <ul style={{ color: '#cbd5e1', fontSize: '0.875rem', paddingLeft: '1.5rem' }}>
-                    <li style={{ marginBottom: '0.25rem' }}>5：極めて自然で快適な操作感、体験設計も的確</li>
-                    <li style={{ marginBottom: '0.25rem' }}>4：十分に配慮されたUI、統一感あり</li>
-                    <li style={{ marginBottom: '0.25rem' }}>3：最低限の使いやすさを確保</li>
-                    <li style={{ marginBottom: '0.25rem' }}>2：使いづらさや不親切な点が目立つ</li>
-                    <li>1：UI・UX設計が未着手、または乱雑</li>
+                    <li style={{ marginBottom: '0.25rem' }}>5：AI活用が非常に的確で、プロダクト価値を明確に高めている</li>
+                    <li style={{ marginBottom: '0.25rem' }}>4：活用意図が明確で、実装にも工夫が見られる</li>
+                    <li style={{ marginBottom: '0.25rem' }}>3：効果的に活用されているが、目新しさや工夫はやや控えめ</li>
+                    <li style={{ marginBottom: '0.25rem' }}>2：AIを使っているが、目的や活かし方に曖昧さがある</li>
+                    <li>1：AI活用なし、または使用しているが効果や意図が読み取れない</li>
                   </ul>
                 </div>
               </div>
