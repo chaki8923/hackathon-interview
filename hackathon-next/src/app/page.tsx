@@ -1186,8 +1186,8 @@ export default function Home() {
               </div>
               
               <div className="hackathon-photos-section">
-                <h3 className="themes-heading text-2xl font-semibold mb-8 text-white text-center">今回のハッカソンの様子</h3>
-                <p className="text-gray-300 text-lg text-center mb-8">部長や役員への中間発表も行い、過去で一番プロダクトへの想いがこもってます</p>
+                <h3 className="themes-heading text-2xl font-semibold mb-8 text-white text-center">皆さんのご参加お待ちしてます！</h3>
+                <p className="text-gray-300 text-lg text-center mb-8">部長や役員への中間発表も行い、過去で一番プロダクトへの想いがこもってます!!</p>
                 
                 <div className="hackathon-photos-grid max-w-6xl mx-auto">
                   <div className="photos-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
