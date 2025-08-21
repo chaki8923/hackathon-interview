@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { FaArrowRight, FaChevronDown, FaTimes, FaBuilding, FaTools, FaGlobe, FaRocket, FaGrinStars, FaStar, FaLock, FaCheck } from 'react-icons/fa';
+import { FaChevronDown, FaTimes, FaBuilding, FaTools, FaGlobe, FaRocket, FaGrinStars, FaStar, FaLock, FaCheck } from 'react-icons/fa';
 import styles from './index.module.scss';
 import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -14,9 +14,7 @@ import 'swiper/css/effect-coverflow';
 import 'swiper/css/effect-creative';
 import 'swiper/css/autoplay';
 import LikeButton from './components/LikeButton';
-import ApplicationModal from './components/ApplicationModal';
 import IntroAnimation from './components/IntroAnimation';
-import OnlineViewerModal from './components/OnlineViewerModal';
 import Link from 'next/link';
 
 // インタビューデータの型定義
@@ -213,15 +211,13 @@ export default function Home() {
   const [scrollY, setScrollY] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const polygonsRef = useRef<Array<{x: number, y: number, size: number, angle: number, speed: number}>>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isOnlineViewerModalOpen, setIsOnlineViewerModalOpen] = useState(false);
+
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isPremiumUser, setIsPremiumUser] = useState(false);
   const [showIntroAnimation, setShowIntroAnimation] = useState(false);
   
   // 参加者数のstate追加
   const [applicantCount, setApplicantCount] = useState<number>(0);
-  const [onlineViewerCount, setOnlineViewerCount] = useState<number>(0);
   const [countLoaded, setCountLoaded] = useState<boolean>(false);
   
   // 画像ビューワー用の状態
@@ -230,21 +226,6 @@ export default function Home() {
   const [selectedImageAlt, setSelectedImageAlt] = useState("");
   const [isImageLoading, setIsImageLoading] = useState(false);
   
-  // 画像プリロード用の状態
-  const [preloadedImages, setPreloadedImages] = useState<Set<string>>(new Set());
-  const galleryImageUrls = [
-    "https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8798.jpg",
-    "https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8803.jpg",
-    "https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8819.jpg",
-    "https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8826.jpg",
-    "https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8836.jpg",
-    "https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8822.jpg",
-    "https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8839.jpg",
-    "https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8849.jpg",
-    "https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8850.jpg",
-    "https://ibj-hack.s3.ap-northeast-1.amazonaws.com/IMG_8873.jpg"
-  ];
-
   // LocalStorageから課金状態とアニメーション表示状態を取得
   useEffect(() => {
     console.log("useEffect");
@@ -266,7 +247,6 @@ export default function Home() {
     
     // 初期データ取得
     fetchInterviews();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // インタビューデータを取得
@@ -413,16 +393,6 @@ export default function Home() {
     }
   };
 
-  // モーダルを開く処理
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  // モーダルを閉じる処理
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-  
   // 課金モーダルを開く処理
   const handleOpenPaymentModal = () => {
     setIsPaymentModalOpen(true);
@@ -431,16 +401,6 @@ export default function Home() {
   // 課金モーダルを閉じる処理
   const handleClosePaymentModal = () => {
     setIsPaymentModalOpen(false);
-  };
-  
-  // オンライン視聴モーダルを開く処理
-  const handleOpenOnlineViewerModal = () => {
-    setIsOnlineViewerModalOpen(true);
-  };
-
-  // オンライン視聴モーダルを閉じる処理
-  const handleCloseOnlineViewerModal = () => {
-    setIsOnlineViewerModalOpen(false);
   };
   
   // 支払い完了後の処理
@@ -461,48 +421,7 @@ export default function Home() {
     }
   };
 
-  // 特定の画像をプリロードする関数
-  const preloadImage = (src: string) => {
-    if (preloadedImages.has(src)) return; // 既にプリロード済みならスキップ
-    
-    const img = new window.Image();
-    img.src = src;
-    img.onload = () => {
-      setPreloadedImages(prev => new Set([...prev, src]));
-    };
-  };
-  
-  // ビューに表示されているサムネイル画像の読み込みを監視
-  useEffect(() => {
-    // ページがブラウザで実行されていることを確認
-    if (typeof window === 'undefined') return;
-    
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            // data-full-src属性から元画像のURLを取得
-            const element = entry.target as HTMLElement;
-            const fullSrc = element.getAttribute('data-full-src');
-            if (fullSrc) {
-              preloadImage(fullSrc);
-            }
-          }
-        });
-      },
-      { rootMargin: '200px' } // ビューポートから200px手前で読み込み開始
-    );
-    
-    // サムネイルの監視を開始
-    const thumbnails = document.querySelectorAll('.gallery-image[data-full-src]');
-    thumbnails.forEach(img => {
-      observer.observe(img);
-    });
-    
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
+
 
   // 画像を拡大表示する際のハンドラ
   const openImageViewer = (imageUrl: string, alt: string) => {
@@ -510,20 +429,6 @@ export default function Home() {
     setSelectedImageAlt(alt);
     setIsImageViewerOpen(true);
     setIsImageLoading(true);
-    
-    // すでにプリロード済みの場合はローディング状態をすぐに解除
-    if (preloadedImages.has(imageUrl)) {
-      setIsImageLoading(false);
-    } else {
-      // プリロードされていない場合は読み込みを開始
-      preloadImage(imageUrl);
-      // 画像のロード完了を待つためのイベントハンドラを設定
-      const img = new window.Image();
-      img.src = imageUrl;
-      img.onload = () => {
-        setIsImageLoading(false);
-      };
-    }
   };
 
   // 画像ビューワーを閉じる
@@ -531,27 +436,10 @@ export default function Home() {
     setIsImageViewerOpen(false);
   };
 
-  // コンポーネントがマウントされたときに、表示される可能性の高い最初の数枚の画像をプリロード
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    
-    // 最初の3枚のギャラリー画像をプリロード
-    galleryImageUrls.slice(0, 3).forEach(url => {
-      preloadImage(url);
-    });
-  }, []);
-  
-  // Swiperがスライド変更時に次の画像をプリロード
+  // Swiperがスライド変更時
   const handleSlideChange = (swiper: SwiperType) => {
     // 現在のインデックスを更新
     setCurrentIndex(swiper.realIndex);
-    
-    // 次のスライドの画像をプリロード（次の2枚）
-    const nextIndex1 = (swiper.realIndex + 1) % galleryImageUrls.length;
-    const nextIndex2 = (swiper.realIndex + 2) % galleryImageUrls.length;
-    
-    preloadImage(galleryImageUrls[nextIndex1]);
-    preloadImage(galleryImageUrls[nextIndex2]);
   };
 
   // 参加者数を取得
@@ -568,23 +456,8 @@ export default function Home() {
     }
   };
 
-  // オンライン視聴者数を取得
-  const fetchOnlineViewerCount = async () => {
-    try {
-      const response = await fetch('/api/online-viewers/count');
-      if (response.ok) {
-        const data: ApplicantCount = await response.json();
-        setOnlineViewerCount(data.count);
-        setCountLoaded(true);
-      }
-    } catch (error) {
-      console.error('オンライン視聴者数の取得に失敗しました:', error);
-    }
-  };
-  
   useEffect(() => {
     fetchApplicantCount();
-    fetchOnlineViewerCount();
   }, []);
 
   if (isLoading) {
@@ -1312,90 +1185,138 @@ export default function Home() {
                 </div>
               </div>
               
-              <div className="recruitment-info">
-                <h3 className="themes-heading text-2xl font-semibold mb-8 text-white text-center">募集要項</h3>
-                <div className="recruitment-content max-w-3xl mx-auto">
-                  <div className="recruitment-text bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-xl p-8">
-                    <p className="text-gray-300 text-lg text-center mb-8">普段の勉強のアウトプットをしたい人、1人だと勉強する気が起きない人、とりあえずハッカソンというものに興味がある人。</p>
-                    <div className="edge-line h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent my-8"></div>
-                    <div className="cta-banner py-4 relative text-center overflow-hidden">
-                      <h4 className="text-2xl font-bold text-white z-10 relative">さぁ、一歩踏み出そう</h4>
-                      <div className="glitch-effect absolute inset-0 bg-blue-500/20"></div>
+              <div className="hackathon-photos-section">
+                <h3 className="themes-heading text-2xl font-semibold mb-8 text-white text-center">今回のハッカソンの様子</h3>
+                <p className="text-gray-300 text-lg text-center mb-8">部長や役員への中間発表も行い、過去で一番プロダクトへの想いがこもってます</p>
+                
+                <div className="hackathon-photos-grid max-w-6xl mx-auto">
+                  <div className="photos-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    
+                    <div className="photo-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-xl overflow-hidden transition-transform duration-300 hover:scale-105">
+                      <div className="photo-wrapper relative h-64 cursor-pointer group" onClick={() => openImageViewer("/images/member/phot1.jpeg", "チームでの議論の様子")}>
+                        <div className="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/10 transition-all duration-300 z-10 flex items-center justify-center">
+                          <div className="scale-0 group-hover:scale-100 transition-transform duration-300 bg-white/10 backdrop-blur-sm rounded-full p-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                              <circle cx="11" cy="11" r="8"></circle>
+                              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                              <line x1="11" y1="8" x2="11" y2="14"></line>
+                              <line x1="8" y1="11" x2="14" y2="11"></line>
+                            </svg>
+                          </div>
+                        </div>
+                        <Image
+                          src="/images/member/phot1.jpeg"
+                          alt="チームでの議論の様子"
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
 
-          <section className="cta py-20 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
-              あなたの<span className="text-blue-500">挑戦</span>を待っています
-            </h2>
-            <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-              何もできなくてOK！ボタンひとつだけでも仲間と話し合って作ってみませんか？
-            </p>
-            
-            {/* 募集期間表示 */}
-            <div className="application-period mb-6">
-              <div className="period-badge inline-block py-2 px-4 bg-gradient-to-r from-blue-900/50 to-purple-900/50 backdrop-blur-sm border border-blue-800/30 rounded-lg">
-                <p className="text-sm text-blue-300">
-                  <span className="font-semibold">参加者募集期間</span>: 2025年4月14日(月) 〜 2025年4月25日(金)
-                </p>
-                <p className="text-sm text-blue-300">
-                  <span className="font-semibold">視聴者募集期間</span>:  〜 2025年8月15日(金)
-                </p>
-              </div>
-            </div>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button 
-                className="apply-btn bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-8 rounded-lg flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg cursor-pointer"
-                onClick={handleOpenModal}
-              >
-                今すぐ応募する <FaArrowRight className="ml-2" />
-              </button>
-              
-              <button 
-                className="online-viewer-btn bg-gradient-to-r from-purple-600/80 to-pink-600/80 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-3 px-8 rounded-lg flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg cursor-pointer border border-purple-500/30"
-                onClick={handleOpenOnlineViewerModal}
-              >
-                オンライン視聴で参加 <FaArrowRight className="ml-2" />
-              </button>
-            </div>
+                    <div className="photo-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-xl overflow-hidden transition-transform duration-300 hover:scale-105">
+                      <div className="photo-wrapper relative h-64 cursor-pointer group" onClick={() => openImageViewer("/images/member/photo2.jpg", "開発作業に集中する様子")}>
+                        <div className="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/10 transition-all duration-300 z-10 flex items-center justify-center">
+                          <div className="scale-0 group-hover:scale-100 transition-transform duration-300 bg-white/10 backdrop-blur-sm rounded-full p-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                              <circle cx="11" cy="11" r="8"></circle>
+                              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                              <line x1="11" y1="8" x2="11" y2="14"></line>
+                              <line x1="8" y1="11" x2="14" y2="11"></line>
+                            </svg>
+                          </div>
+                        </div>
+                        <Image
+                          src="/images/member/photo2.jpg"
+                          alt="開発作業に集中する様子"
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                    </div>
 
-            {/* 参加者カウンター表示 */}
-            <div className="counters-container flex flex-col md:flex-row justify-center gap-6 mt-8">
-              <div className="counter-box">
-                <div className="counter-label text-gray-400 text-sm mb-2">現在の参加申込者数</div>
-                <div className="counter-value relative flex items-center">
-                  <div className="counter-bg absolute inset-0 bg-blue-500/10 rounded-lg blur-md"></div>
-                  <div className="counter-digits relative flex items-center justify-center min-w-[120px] h-12 rounded-lg border border-blue-500/30 bg-gray-900/50 backdrop-blur-sm px-6">
-                    {!countLoaded ? (
-                      <div className="animate-pulse flex space-x-1">
-                        <div className="h-4 w-4 bg-blue-500/20 rounded"></div>
-                        <div className="h-4 w-4 bg-blue-500/20 rounded"></div>
+                    <div className="photo-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-xl overflow-hidden transition-transform duration-300 hover:scale-105">
+                      <div className="photo-wrapper relative h-64 cursor-pointer group" onClick={() => openImageViewer("/images/member/photo3.jpg", "中間発表の準備")}>
+                        <div className="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/10 transition-all duration-300 z-10 flex items-center justify-center">
+                          <div className="scale-0 group-hover:scale-100 transition-transform duration-300 bg-white/10 backdrop-blur-sm rounded-full p-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                              <circle cx="11" cy="11" r="8"></circle>
+                              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                              <line x1="11" y1="8" x2="11" y2="14"></line>
+                              <line x1="8" y1="11" x2="14" y2="11"></line>
+                            </svg>
+                          </div>
+                        </div>
+                        <Image
+                          src="/images/member/photo3.jpg"
+                          alt="中間発表の準備"
+                          fill
+                          className="object-cover"
+                        />
                       </div>
-                    ) : (
-                      <span className="text-2xl font-bold text-blue-400">{applicantCount}<span className="text-xs align-top ml-1">名</span></span>
-                    )}
-                  </div>
-                </div>
-              </div>
-              
-              <div className="counter-box">
-                <div className="counter-label text-gray-400 text-sm mb-2">オンライン視聴登録者数</div>
-                <div className="counter-value relative flex items-center">
-                  <div className="counter-bg absolute inset-0 bg-purple-500/10 rounded-lg blur-md"></div>
-                  <div className="counter-digits relative flex items-center justify-center min-w-[120px] h-12 rounded-lg border border-purple-500/30 bg-gray-900/50 backdrop-blur-sm px-6">
-                    {!countLoaded ? (
-                      <div className="animate-pulse flex space-x-1">
-                        <div className="h-4 w-4 bg-purple-500/20 rounded"></div>
-                        <div className="h-4 w-4 bg-purple-500/20 rounded"></div>
+                    </div>
+
+                    <div className="photo-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-xl overflow-hidden transition-transform duration-300 hover:scale-105">
+                      <div className="photo-wrapper relative h-64 cursor-pointer group" onClick={() => openImageViewer("/images/member/photo4.jpg", "プレゼンテーションの様子")}>
+                        <div className="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/10 transition-all duration-300 z-10 flex items-center justify-center">
+                          <div className="scale-0 group-hover:scale-100 transition-transform duration-300 bg-white/10 backdrop-blur-sm rounded-full p-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                              <circle cx="11" cy="11" r="8"></circle>
+                              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                              <line x1="11" y1="8" x2="11" y2="14"></line>
+                              <line x1="8" y1="11" x2="14" y2="11"></line>
+                            </svg>
+                          </div>
+                        </div>
+                        <Image
+                          src="/images/member/photo4.jpg"
+                          alt="プレゼンテーションの様子"
+                          fill
+                          className="object-cover"
+                        />
                       </div>
-                    ) : (
-                      <span className="text-2xl font-bold text-purple-400">{onlineViewerCount}<span className="text-xs align-top ml-1">名</span></span>
-                    )}
+                    </div>
+
+                    <div className="photo-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-xl overflow-hidden transition-transform duration-300 hover:scale-105">
+                      <div className="photo-wrapper relative h-64 cursor-pointer group" onClick={() => openImageViewer("/images/member/photo5.jpg", "チーム全員での記念撮影")}>
+                        <div className="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/10 transition-all duration-300 z-10 flex items-center justify-center">
+                          <div className="scale-0 group-hover:scale-100 transition-transform duration-300 bg-white/10 backdrop-blur-sm rounded-full p-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                              <circle cx="11" cy="11" r="8"></circle>
+                              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                              <line x1="11" y1="8" x2="11" y2="14"></line>
+                              <line x1="8" y1="11" x2="14" y2="11"></line>
+                            </svg>
+                          </div>
+                        </div>
+                        <Image
+                          src="/images/member/photo5.jpg"
+                          alt="チーム全員での記念撮影"
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                    </div>
+                    <div className="photo-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-xl overflow-hidden transition-transform duration-300 hover:scale-105">
+                      <div className="photo-wrapper relative h-64 cursor-pointer group" onClick={() => openImageViewer("/images/member/photo5.jpg", "チーム全員での記念撮影")}>
+                        <div className="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/10 transition-all duration-300 z-10 flex items-center justify-center">
+                          <div className="scale-0 group-hover:scale-100 transition-transform duration-300 bg-white/10 backdrop-blur-sm rounded-full p-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                              <circle cx="11" cy="11" r="8"></circle>
+                              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                              <line x1="11" y1="8" x2="11" y2="14"></line>
+                              <line x1="8" y1="11" x2="14" y2="11"></line>
+                            </svg>
+                          </div>
+                        </div>
+                        <Image
+                          src="/images/member/photo6.jpeg"
+                          alt="茶木です"
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                    </div>
+
                   </div>
                 </div>
               </div>
@@ -1410,19 +1331,6 @@ export default function Home() {
         </footer>
       </div>
 
-      {/* 応募モーダル */}
-      <ApplicationModal 
-        isOpen={isModalOpen} 
-        onClose={handleCloseModal} 
-        openPaymentModal={handleOpenPaymentModal}
-      />
-      
-      {/* オンライン視聴モーダル */}
-      <OnlineViewerModal 
-        isOpen={isOnlineViewerModalOpen} 
-        onClose={handleCloseOnlineViewerModal} 
-      />
-      
       {/* 課金モーダル */}
       <PaymentModal
         isOpen={isPaymentModalOpen}
