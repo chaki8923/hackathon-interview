@@ -1297,7 +1297,7 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="photo-item bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-xl overflow-hidden transition-transform duration-300 hover:scale-105">
-                      <div className="photo-wrapper relative h-64 cursor-pointer group" onClick={() => openImageViewer("/images/member/photo5.jpg", "チーム全員での記念撮影")}>
+                      <div className="photo-wrapper relative h-64 cursor-pointer group" onClick={() => openImageViewer("/images/member/photo6.jpeg", "チーム全員での記念撮影")}>
                         <div className="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/10 transition-all duration-300 z-10 flex items-center justify-center">
                           <div className="scale-0 group-hover:scale-100 transition-transform duration-300 bg-white/10 backdrop-blur-sm rounded-full p-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
